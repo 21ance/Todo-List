@@ -1,4 +1,19 @@
+import { loadAll } from "./initialPage";
+import { Storage } from "./localStorage";
+
 const container = document.querySelector("#container");
+
+export const buttons = (() => {
+  const newTodo = document.createElement("button");
+  newTodo.setAttribute("id", "new-todo");
+  newTodo.textContent = "New Todo";
+
+  const newProject = document.createElement("button");
+  newProject.setAttribute("id", "new-project");
+  newProject.textContent = "New Project";
+
+  return { newTodo, newProject };
+})();
 
 const headerLoader = (() => {
   const header = document.createElement("header");
@@ -30,17 +45,19 @@ export const sidebarLoader = (() => {
 
   sidebarDynamic.append(projSpan);
 
-  const btnNewTodo = document.createElement("button");
-  btnNewTodo.setAttribute("id", "new-todo");
-  btnNewTodo.textContent = "New Todo";
+  for (let i = 0; i < Storage.projectList.length; i++) {
+    sidebarDynamic.append(
+      sideBarItem(`${Storage.projectList[i]}`, "pricetag-outline")
+    );
+  }
 
-  sidebar.append(sidebarStatic, sidebarDynamic, btnNewTodo);
+  sidebar.append(sidebarStatic, sidebarDynamic, buttons.newProject);
 
-  return { sidebar, btnNewTodo };
+  return sidebar;
 })();
 
 // sidebarLoader helper
-function sideBarItem(text, ionicIcon) {
+export function sideBarItem(text, ionicIcon) {
   const itemContainer = document.createElement("span");
 
   const icon = document.createElement("ion-icon");
@@ -53,6 +70,8 @@ function sideBarItem(text, ionicIcon) {
   itemContainer.append(icon, button);
   return itemContainer;
 }
+
+export const mainLoader = document.createElement("main");
 
 const footerLoader = (() => {
   const footer = document.createElement("footer");
@@ -88,7 +107,7 @@ export const modalLoader = (() => {
   //limit date input to today onwards
   let currentDate = new Date().toJSON().slice(0, 10);
   date.setAttribute("min", `${currentDate}`);
-  console.log(currentDate);
+  // console.log(currentDate);
 
   const btnSubmit = document.createElement("button");
   btnSubmit.textContent = "Add Todo";
@@ -103,8 +122,18 @@ export const modalLoader = (() => {
 export function InitializePage() {
   container.append(
     headerLoader,
-    sidebarLoader.sidebar,
+    sidebarLoader,
+    mainLoader,
     footerLoader,
     modalLoader.modal
   );
+  resetMain();
+  loadAll();
+}
+
+export function resetMain() {
+  let children = mainLoader.childElementCount;
+  for (let i = 0; i < children; i++) {
+    mainLoader.removeChild(mainLoader.lastChild);
+  }
 }

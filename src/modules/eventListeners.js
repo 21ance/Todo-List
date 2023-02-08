@@ -1,46 +1,56 @@
-import { sidebarLoader, modalLoader } from "./DOM";
-import { Todo, todoList } from "./newTodo";
+import {
+  modalLoader,
+  buttons,
+  resetMain,
+  sidebarLoader,
+  sideBarItem,
+} from "./DOM";
+import { loadAll, todoPreview } from "./initialPage";
+import { Todo, Project } from "./newTodo";
+import { Storage } from "./localStorage";
 
 export const events = (() => {
   modalLoader.form.addEventListener("submit", (e) => {
-    // console.log("asd");
     const todo = Todo(
+      "",
       document.querySelector("#title").value,
       document.querySelector("#description").value,
       document.querySelector("#date").value
     );
-    e.preventDefault();
 
     formHelper();
+    e.preventDefault();
   });
 })();
 
 // close modal and reset form
 function formHelper() {
-  toggleModal();
+  console.log(localStorage);
+  localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
+
   document.querySelector("form").reset();
-  console.log(todoList);
+  toggleModal();
+  resetMain();
+  loadAll();
 }
 
-// const t1 = Todo("Go to vet", "checkup for doge", "Feb 10", "Normal");
-// const t2 = Todo("Buy gift", "valentines", "Feb 14", "High");
-
-// for (let i = 0; i < todoList.length; i++) {
-//   console.log(todoList[i].title);
-//   console.log(todoList[i].dueDate);
-// }
-
+// to clean
 // modal script
-function toggleModal() {
-  const modal = document.querySelector("#modal");
-  modal.classList.toggle("show-modal");
-}
-
 function windowOnClick(event) {
   if (event.target === modal) {
-    toggleModal();
+    modalLoader.modal.classList.toggle("show-modal");
   }
 }
 
-sidebarLoader.btnNewTodo.addEventListener("click", toggleModal);
+buttons.newTodo.addEventListener("click", (e) => {
+  modalLoader.modal.classList.toggle("show-modal");
+});
+
 window.addEventListener("click", windowOnClick);
+
+// new project
+buttons.newProject.addEventListener("click", (e) => {
+  const newProj = prompt("Project Name");
+  const project = Project(`${newProj}`);
+  localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
+});

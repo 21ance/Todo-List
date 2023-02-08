@@ -1,11 +1,18 @@
-export let todoList = [];
+import { Storage } from "./localStorage";
 
-export const Todo = (title, description, dueDate) => {
+export const Todo = (project, title, description, dueDate) => {
   const todoItem = {
+    project,
     title,
     description,
     dueDate,
   };
 
-  todoList.push(todoItem);
+  Storage.allTodoList.push(todoItem);
+};
+
+export const Project = (projectName) => {
+  Storage.projectList.push(projectName);
+
+  console.log(Storage.projectList);
 };
