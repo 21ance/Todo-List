@@ -12,14 +12,14 @@ import { Storage } from "./localStorage";
 export const events = (() => {
   modalLoader.form.addEventListener("submit", (e) => {
     const todo = Todo(
-      "",
+      document.querySelector("main").getAttribute("id"),
       document.querySelector("#title").value,
       document.querySelector("#description").value,
       document.querySelector("#date").value
     );
 
-    formHelper();
     e.preventDefault();
+    formHelper();
   });
 })();
 
@@ -29,7 +29,8 @@ function formHelper() {
   localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
 
   document.querySelector("form").reset();
-  toggleModal();
+  // toggleModal();
+  modalLoader.modal.classList.toggle("show-modal");
   resetMain();
   loadAll();
 }

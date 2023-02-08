@@ -2,12 +2,11 @@ import { mainLoader, buttons } from "./DOM";
 
 export function loadAll() {
   let users = JSON.parse(localStorage.getItem("All") || "[]");
+  mainLoader.append(buttons.newTodo);
 
   for (let i = 0; i < users.length; i++) {
     displayTodo(users[i].title, users[i].dueDate);
   }
-
-  mainLoader.append(buttons.newTodo);
 }
 
 export function displayTodo(todoTitle, todoDate) {
