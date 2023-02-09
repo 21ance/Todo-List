@@ -1,19 +1,51 @@
-import { Storage } from "./localStorage";
-import { renderMain } from "./renderer";
+import { renderMain, renderSidebarItems } from "./renderer";
 
 const container = document.querySelector("#container");
 export const currentDate = new Date().toJSON().slice(0, 10);
 
 export const buttons = (() => {
-  const newTodo = document.createElement("button");
-  newTodo.setAttribute("id", "new-todo");
-  newTodo.textContent = "New Todo";
+  function createTodoButton() {
+    const btnNewTodo = document.createElement("button");
+    btnNewTodo.setAttribute("id", "new-todo");
+    btnNewTodo.textContent = "New Todo";
 
-  const newProject = document.createElement("button");
-  newProject.setAttribute("id", "new-project");
-  newProject.textContent = "New Project";
+    return btnNewTodo;
+  }
 
-  return { newTodo, newProject };
+  function createProjectButton() {
+    const btnNewProject = document.createElement("button");
+    btnNewProject.setAttribute("id", "new-project");
+    btnNewProject.textContent = "New Project";
+
+    return btnNewProject;
+  }
+
+  function createEditButton(identifier) {
+    const btnEdit = document.createElement("button");
+    btnEdit.setAttribute("id", "btnEdit");
+    btnEdit.textContent = "Edit";
+
+    btnEdit.setAttribute("data-id", `${identifier}`);
+
+    return btnEdit;
+  }
+
+  function createRemoveButton(identifier) {
+    const btnRemove = document.createElement("button");
+    btnRemove.setAttribute("id", "btnRemove");
+    btnRemove.textContent = "Remove";
+
+    btnRemove.setAttribute("data-id", `${identifier}`);
+
+    return btnRemove;
+  }
+
+  return {
+    createTodoButton,
+    createProjectButton,
+    createEditButton,
+    createRemoveButton,
+  };
 })();
 
 // header
@@ -47,14 +79,7 @@ export const sidebarLoader = (() => {
   );
 
   sidebarDynamic.append(projSpan);
-
-  for (let i = 0; i < Storage.projectList.length; i++) {
-    sidebarDynamic.append(
-      sideBarItem(`${Storage.projectList[i]}`, "pricetag-outline")
-    );
-  }
-
-  sidebar.append(sidebarStatic, sidebarDynamic, buttons.newProject);
+  sidebar.append(sidebarStatic, sidebarDynamic, buttons.createProjectButton());
 
   return { sidebar, sidebarDynamic };
 })();
@@ -132,7 +157,7 @@ export const modalLoader = (() => {
   return { modal, form };
 })();
 
-export function InitializePage() {
+const InitializePage = (() => {
   container.append(
     headerLoader,
     sidebarLoader.sidebar,
@@ -140,12 +165,7 @@ export function InitializePage() {
     footerLoader,
     modalLoader.modal
   );
-  renderMain("All");
-}
+})();
 
-export function resetMain() {
-  let children = mainLoader.childElementCount;
-  for (let i = 0; i < children; i++) {
-    mainLoader.removeChild(mainLoader.lastChild);
-  }
-}
+renderMain("All");
+renderSidebarItems();

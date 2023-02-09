@@ -1,46 +1,90 @@
 import { mainLoader, buttons } from "./DOM";
-import { resetMain } from "./DOM";
-import { displayNavTitle } from "./DOM";
 import { currentDate } from "./DOM";
+import { Storage } from "./localStorage";
+import { sidebarLoader } from "./DOM";
+import { sideBarItem } from "./DOM";
+import { displayNavTitle } from "./DOM";
+import { mainEvent, sidebarEvent } from "./eventListeners";
 
-export function displayTodo(todoTitle, todoDate) {
+function displayTodo(todoTitle, todoDate, identifier) {
   const container = document.createElement("div");
+
   const title = document.createElement("span");
-  const date = document.createElement("span");
-
-  const btnEdit = document.createElement("button");
-  const btnRemove = document.createElement("button");
-
-  btnEdit.textContent = "Edit";
-  btnRemove.textContent = "Remove";
-
   title.textContent = `${todoTitle}`;
+
+  const date = document.createElement("span");
   date.textContent = `${todoDate}`;
 
-  container.append(title, date, btnEdit, btnRemove);
+  container.append(
+    title,
+    date,
+    buttons.createEditButton(`${identifier}`),
+    buttons.createRemoveButton(`${identifier}`)
+  );
 
   return mainLoader.append(container);
 }
 
 export function renderMain(mainID) {
   resetMain();
-  mainLoader.append(buttons.newTodo);
+  mainLoader.append(buttons.createTodoButton());
   mainLoader.setAttribute("id", mainID);
   displayNavTitle(mainID);
-  let todosObject = JSON.parse(localStorage.getItem("All") || "[]");
-  for (let i = 0; i < todosObject.length; i++) {
+
+  for (let i = 0; i < Storage.allTodoList.length; i++) {
     if (mainID == "All") {
-      displayTodo(todosObject[i].title, todosObject[i].dueDate);
+      displayTodo(
+        Storage.allTodoList[i].title,
+        Storage.allTodoList[i].dueDate,
+        i
+      );
     }
-    if (mainID == "Today" && todosObject[i].dueDate == currentDate) {
-      displayTodo(todosObject[i].title, todosObject[i].dueDate);
+    if (mainID == "Today" && Storage.allTodoList[i].dueDate == currentDate) {
+      displayTodo(
+        Storage.allTodoList[i].title,
+        Storage.allTodoList[i].dueDate,
+        i
+      );
     }
     if (
-      mainID == todosObject[i].project &&
+      mainID == Storage.allTodoList[i].project &&
       mainID != "All" &&
       mainID != "Today"
     ) {
-      displayTodo(todosObject[i].title, todosObject[i].dueDate);
+      displayTodo(
+        Storage.allTodoList[i].title,
+        Storage.allTodoList[i].dueDate,
+        i
+      );
     }
+  }
+  mainEvent.newTodoListener();
+  // mainEvent.submitTodoListener();
+  mainEvent.editListener();
+  mainEvent.removeListener();
+}
+
+export function renderSidebarItems() {
+  resetSidebar();
+  for (let i = 0; i < Storage.projectList.length; i++) {
+    sidebarLoader.sidebarDynamic.append(
+      sideBarItem(`${Storage.projectList[i]}`, "clipboard-outline")
+    );
+  }
+  sidebarEvent.sidebarListener();
+  sidebarEvent.newProjectListener();
+}
+
+function resetMain() {
+  let children = mainLoader.childElementCount;
+  for (let i = 0; i < children; i++) {
+    mainLoader.removeChild(mainLoader.lastChild);
+  }
+}
+
+function resetSidebar() {
+  let children = sidebarLoader.sidebarDynamic.childElementCount;
+  for (let i = 0; i < children - 1; i++) {
+    mainLoader.removeChild(sidebarLoader.sidebarDynamic.lastChild);
   }
 }
