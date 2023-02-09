@@ -13,6 +13,4 @@ export const Todo = (project, title, description, dueDate) => {
 
 export const Project = (projectName) => {
   Storage.projectList.push(projectName);
-
-  console.log(Storage.projectList);
 };

@@ -1,7 +1,8 @@
-import { loadAll } from "./initialPage";
 import { Storage } from "./localStorage";
+import { renderMain } from "./renderer";
 
 const container = document.querySelector("#container");
+export const currentDate = new Date().toJSON().slice(0, 10);
 
 export const buttons = (() => {
   const newTodo = document.createElement("button");
@@ -15,6 +16,7 @@ export const buttons = (() => {
   return { newTodo, newProject };
 })();
 
+// header
 const headerLoader = (() => {
   const header = document.createElement("header");
   const h1 = document.createElement("h1");
@@ -24,6 +26,7 @@ const headerLoader = (() => {
   return header;
 })();
 
+// sidebar
 export const sidebarLoader = (() => {
   const sidebar = document.createElement("aside");
 
@@ -53,7 +56,7 @@ export const sidebarLoader = (() => {
 
   sidebar.append(sidebarStatic, sidebarDynamic, buttons.newProject);
 
-  return sidebar;
+  return { sidebar, sidebarDynamic };
 })();
 
 // sidebarLoader helper
@@ -71,8 +74,17 @@ export function sideBarItem(text, ionicIcon) {
   return itemContainer;
 }
 
+// main
 export const mainLoader = document.createElement("main");
 
+export function displayNavTitle(name) {
+  const span = document.createElement("span");
+  span.textContent = `${name}`;
+
+  mainLoader.append(span);
+}
+
+// footer
 const footerLoader = (() => {
   const footer = document.createElement("footer");
   const footerSpan = document.createElement("span");
@@ -82,6 +94,7 @@ const footerLoader = (() => {
   return footer;
 })();
 
+// modal
 export const modalLoader = (() => {
   const modal = document.createElement("div");
   modal.classList.add("modal");
@@ -105,7 +118,7 @@ export const modalLoader = (() => {
   date.setAttribute("type", "date");
   date.setAttribute("id", "date");
   //limit date input to today onwards
-  let currentDate = new Date().toJSON().slice(0, 10);
+  // let currentDate = new Date().toJSON().slice(0, 10);
   date.setAttribute("min", `${currentDate}`);
   // console.log(currentDate);
 
@@ -122,13 +135,12 @@ export const modalLoader = (() => {
 export function InitializePage() {
   container.append(
     headerLoader,
-    sidebarLoader,
+    sidebarLoader.sidebar,
     mainLoader,
     footerLoader,
     modalLoader.modal
   );
-  resetMain();
-  loadAll();
+  renderMain("All");
 }
 
 export function resetMain() {

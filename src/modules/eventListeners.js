@@ -1,14 +1,11 @@
-import {
-  modalLoader,
-  buttons,
-  resetMain,
-  sidebarLoader,
-  sideBarItem,
-} from "./DOM";
-import { loadAll, todoPreview } from "./initialPage";
-import { Todo, Project } from "./newTodo";
+import { modalLoader, buttons } from "./DOM";
+import { Todo, Project } from "./factories";
 import { Storage } from "./localStorage";
+import { Modal } from "./modalHandler";
+import { renderMain } from "./renderer";
+import { sidebarLoader, sideBarItem } from "./DOM";
 
+// new todo
 export const events = (() => {
   modalLoader.form.addEventListener("submit", (e) => {
     const todo = Todo(
@@ -18,40 +15,22 @@ export const events = (() => {
       document.querySelector("#date").value
     );
 
+    localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
+
     e.preventDefault();
-    formHelper();
+    Modal.formHelper();
   });
 })();
-
-// close modal and reset form
-function formHelper() {
-  console.log(localStorage);
-  localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
-
-  document.querySelector("form").reset();
-  // toggleModal();
-  modalLoader.modal.classList.toggle("show-modal");
-  resetMain();
-  loadAll();
-}
-
-// to clean
-// modal script
-function windowOnClick(event) {
-  if (event.target === modal) {
-    modalLoader.modal.classList.toggle("show-modal");
-  }
-}
-
-buttons.newTodo.addEventListener("click", (e) => {
-  modalLoader.modal.classList.toggle("show-modal");
-});
-
-window.addEventListener("click", windowOnClick);
 
 // new project
 buttons.newProject.addEventListener("click", (e) => {
   const newProj = prompt("Project Name");
   const project = Project(`${newProj}`);
   localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
+
+  sidebarLoader.sidebarDynamic.append(
+    sideBarItem(`${newProj}`, "pricetag-outline")
+  );
 });
+
+// todo edit item
