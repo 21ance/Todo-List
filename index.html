@@ -54,20 +54,6 @@
             <button title="Expand Item"><ion-icon name="information-circle-outline"></ion-icon></button>
           </div>
         </div>
-
-        <div class="todo-item">
-          <div class="todo-item-left">
-            <input type="checkbox">
-            <span>Say hello to world</span>
-          </div>
-          <div class="todo-item-right">
-            <span>02/10/2023</span>
-            <button title="Edit Item"><ion-icon name="create-outline"></ion-icon></button>
-            <button title="Remove Item"><ion-icon name="trash-outline"></ion-icon></button>
-            <button title="Expand Item"><ion-icon name="information-circle-outline"></ion-icon></button>
-          </div>
-        </div>
-
       </div>
     </main>
     <footer>
@@ -76,9 +62,25 @@
   </div>
   <div class="modal" id="modal">
     <div class="modal-content">
+      <header>Dynamic Text</header>
       <form action="">
-        <h1>test</h1>
+        <label for="Title">
+          <span>Title</span>
+          <input type="text" placeholder="Enter title">
+        </label>
+        <label for="Description">
+          <span>Description</span>
+          <textarea name="Description" cols="30" rows="3"></textarea>
+        </label>
+        <label for="Due date">
+          <span>Due date</span>
+          <input type="date">
+        </label>
       </form>
+      <footer>
+        <button class="btnCancel">Cancel</button>
+        <button class="dynamic">Dynamic</button>
+      </footer>
     </div>
   </div>
 </body>
