@@ -47,9 +47,10 @@ header {
     }
   }
 
-  h1 {
+  span {
     color: $white-font;
     font-size: 2.5rem;
+    font-weight: bold;
     margin-left: 30px;
   }
 }
@@ -93,6 +94,16 @@ aside {
     align-items: center;
     flex-direction: column;
     gap: 15px;
+
+    .active {
+      background-color: $header-color;
+      color: $white-font;
+      border: 1px solid $header-color;
+    }
+
+    .active:hover {
+      opacity: 0.8;
+    }
   }
 
   .sidebar-static{
@@ -117,7 +128,6 @@ aside {
   }
 
   .sidebar-dynamic {
-
     .dynamic-item-container{
       // almost same as .sidebar-static button
       // to do: sass extend
@@ -135,6 +145,10 @@ aside {
 
       button {
         background-color: $main-color;
+        max-width: 170px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       div button:hover{
@@ -157,10 +171,54 @@ main {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
 
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // align-items: center;
+  // flex-direction: column;
 
   overflow: auto;
+
+  .todos {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10vw;
+    margin-top: 20px;
+
+    h1 {
+      padding: 0 30px;
+      font-size: 3rem;
+      font-weight: normal;
+      border-bottom: 3px solid $dark-color;
+    }
+
+    .todo-item{
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 5px;
+      border-bottom: solid $dark-color;
+      border-width: .1px;
+
+      .todo-item-left {
+        cursor: pointer;
+        max-width: 300px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .todo-item-right {
+        span{
+          margin-right: 8px;
+        }
+        button {
+          background-color: $main-color;
+        }
+        button:hover{
+          scale: 1.2;
+          transition: $transition-time;
+        }
+      }
+    }
+  }
 }
 
 footer {
@@ -170,10 +228,10 @@ footer {
   grid-column: 1 / 3;
   display: flex;
   justify-content: center;
-  align-items: center;
 
   span {
-    font-style: italic;
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -203,6 +261,15 @@ footer {
   }
 }
 
+// disable default ion-icon hovered title
+ion-icon {
+  pointer-events: none;
+}
+
+button {
+  cursor: pointer;
+}
+
 .show-modal {
   visibility: visible;
 }
@@ -228,7 +295,7 @@ footer {
       display: flex;
       align-items: center;
     }
-    h1 {
+    span {
       margin-left: 0px;
     }
   }
@@ -243,6 +310,3 @@ footer {
   }
 }
 
-ion-icon {
-  pointer-events: none;
-}

@@ -12,11 +12,11 @@
   <div class="container">
     <header>
       <button id="sidbar-toggle"><ion-icon name="menu-outline"></ion-icon></button>
-      <h1>Todo App</h1>
+      <span>Todo App</span>
     </header>
     <aside>
       <div class="sidebar-static">
-        <button><ion-icon name="calendar-clear-outline"></ion-icon>All</button>
+        <button class="active"><ion-icon name="calendar-clear-outline"></ion-icon>All</button>
         <button><ion-icon name="today-outline"></ion-icon>Today</button>
         <button><ion-icon name="calendar-outline"></ion-icon>Upcoming</button>
       </div>
@@ -28,17 +28,7 @@
         <div class="dynamic-item-container">
           <button>
             <ion-icon name="calendar-clear-outline"></ion-icon>
-            <span>Project One</span>
-          </button>
-          <div>
-            <button title="Edit Project"><ion-icon name="create-outline"></ion-icon></button>
-            <button title="Remove Project"><ion-icon name="trash-outline"></ion-icon></button>
-          </div>
-        </div>
-        <div class="dynamic-item-container">
-          <button>
-            <ion-icon name="calendar-clear-outline"></ion-icon>
-            <span>Project Two</span>
+            <span>Project One lorem</span>
           </button>
           <div>
             <button title="Edit Project"><ion-icon name="create-outline"></ion-icon></button>
@@ -48,10 +38,40 @@
       </div>
     </aside>
     <main>
-      asdasd
+      <div class="todos">
+        <h1>All</h1>
+        <div class="todo-item">
+          <div class="todo-item-left">
+            <input type="checkbox">
+            <span>Complete this todo project Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia eaque
+              incidunt ab, repudiandae cupiditate veritatis autem optio, itaque et omnis aliquid vel fugiat earum
+              corporis? Quas sint nesciunt fuga repudiandae.</span>
+          </div>
+          <div class="todo-item-right">
+            <span>02/10/2023</span>
+            <button title="Edit Item"><ion-icon name="create-outline"></ion-icon></button>
+            <button title="Remove Item"><ion-icon name="trash-outline"></ion-icon></button>
+            <button title="Expand Item"><ion-icon name="information-circle-outline"></ion-icon></button>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-item-left">
+            <input type="checkbox">
+            <span>Say hello to world</span>
+          </div>
+          <div class="todo-item-right">
+            <span>02/10/2023</span>
+            <button title="Edit Item"><ion-icon name="create-outline"></ion-icon></button>
+            <button title="Remove Item"><ion-icon name="trash-outline"></ion-icon></button>
+            <button title="Expand Item"><ion-icon name="information-circle-outline"></ion-icon></button>
+          </div>
+        </div>
+
+      </div>
     </main>
     <footer>
-      <span>by 21ance</span>
+      <span><ion-icon name="logo-github"></ion-icon>21ance</span>
     </footer>
   </div>
   <div class="modal" id="modal">
