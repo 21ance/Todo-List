@@ -204,10 +204,14 @@ $transition-time: 0.3s;
           span{
             margin-right: 10px;
           }
+          
           button {
             background-color: $main-color;
             font-size: 1.3rem;
+            display: flex;
+            align-items: center;
           }
+
           button:hover{
             scale: 1.2;
             transition: $transition-time;
@@ -300,7 +304,7 @@ $transition-time: 0.3s;
         opacity: 0.5;
       }
 
-      .btnCancel {
+      #btnCancel {
         background-color: $main-color;
         border: 1px solid $dark-color;
       }

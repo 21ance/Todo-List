@@ -3,7 +3,6 @@ const dom = (() => {
   const sidebarProjects = document.querySelectorAll(
     "div.sidebar-static>button, .dynamic-item-container>button"
   );
-  const btnNewProject = document.querySelector("button[title='New Project']");
   const btnEditProject = document.querySelectorAll(
     "button[title='Edit Project']"
   );
@@ -32,7 +31,43 @@ const dom = (() => {
     });
   }
 
-  return { sidebarProjects, clickProject };
+  // sidebar new project
+  function newProject() {
+    revealModal("New Project", "Create Project", "btnCreateProject");
+  }
+
+  // main content functions
+  function loadMainContent() {
+    console.log("testMain");
+  }
+
+  // modal functions
+  const modal = document.querySelector(".modal");
+  const modalHeader = document.querySelector(".modal-content header");
+  const modalContent = document.querySelector("form");
+  const btnCancel = document.querySelector("#btnCancel");
+  const btnDynamic = document.querySelector("#btnDynamic");
+
+  function revealModal(modalTitle, btnName, btnId) {
+    toggleModal();
+
+    modalHeader.textContent = `${modalTitle}`;
+    // modalContent.textContent = `${modalContent}`;
+    btnDynamic.textContent = `${btnName}`;
+
+    btnDynamic.setAttribute("id", btnId);
+  }
+
+  function toggleModal() {
+    modal.classList.toggle("show-modal");
+  }
+
+  return {
+    sidebarProjects,
+    clickProject,
+    newProject,
+    toggleModal,
+  };
 })();
 
 export { dom };

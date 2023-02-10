@@ -9,3 +9,11 @@ import { sideProjectListener } from "./modules/listeners";
 //   container.classList.toggle("two-column");
 // });
 sideProjectListener();
+
+// document.addEventListener("click", (e) => {
+//   console.log(e.target);
+
+//   if (e.target === document.querySelector("button[title='Edit Item']")) {
+//     console.log("asdasadas");
+//   }
+// });
