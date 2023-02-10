@@ -4,7 +4,9 @@ $header-color: #292524;
 $footer-color: #292524;
 $sidebar-color: #f5f5f4;
 $main-color: #fafafa;
+$dark-color: #1c1917;
 $white-font: #ffffff;
+$transition-time: 0.3s;
 
 * {
   margin: 0;
@@ -15,19 +17,40 @@ $white-font: #ffffff;
   font-family: 'Open Sans', sans-serif;
 }
 
-#container {
+.container {
   display: grid;
-  grid-template-columns: minmax(100px, 1fr) 5fr;
+  grid-template-columns: 300px 1fr;
   grid-template-rows: 80px calc(100vh - 110px) 30px;
 }
 
 header {
   background-color: $header-color;
   grid-row: 1 / 2;
-  grid-column: 1 / -1;
+  grid-column: 1 / 3;
+
+  display: flex;
+  align-items: center;
+
+  button {
+    color: $main-color;
+    background-color: $header-color;
+
+    display: none;
+
+    ion-icon{
+      font-size: 2rem;
+      margin: 20px;
+    }
+
+    ion-icon:hover{
+    scale: 1.1;
+    }
+  }
 
   h1 {
     color: $white-font;
+    font-size: 2.5rem;
+    margin-left: 30px;
   }
 }
 
@@ -38,16 +61,94 @@ aside {
 
   display: flex;
   flex-direction: column;
-  gap: 20px;
 
   .project-text {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display:  flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 20px;
+    margin-top: 50px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid;
+
+    span, button {
+      margin: 0 20px;
+    }
+
+    button {
+      background-color: $sidebar-color;
+    }
+    
+    button:hover{
+      scale: 1.2;
+      transition: $transition-time;
+    }
   }
 
   .sidebar-static, .sidebar-dynamic{
     display: flex;
+    align-items: center;
     flex-direction: column;
-    gap: 5px;
+    gap: 15px;
+  }
+
+  .sidebar-static{
+    margin-top: 30px;
+    
+    button, .extend {
+      background-color: $main-color;
+      border-radius: 4px;
+      width: 250px;
+      padding: 10px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid $sidebar-color;
+    }
+
+    button:hover{
+      transition: $transition-time;
+      border: 1px solid $dark-color;
+    }
+  }
+
+  .sidebar-dynamic {
+
+    .dynamic-item-container{
+      // almost same as .sidebar-static button
+      // to do: sass extend
+      background-color: $main-color;
+      border-radius: 4px;
+      width: 250px;
+      padding: 10px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid $sidebar-color;
+
+      justify-content: space-between;
+
+      button {
+        background-color: $main-color;
+      }
+
+      div button:hover{
+        scale: 1.2;
+        transition: $transition-time;
+      }
+    }
+
+    .dynamic-item-container:hover{
+      transition: $transition-time;
+      border: 1px solid $dark-color;
+    }
+
+
   }
 }
 
@@ -58,13 +159,15 @@ main {
 
   display: flex;
   flex-direction: column;
+
+  overflow: auto;
 }
 
 footer {
   background-color: $footer-color;
   color: $white-font;
   grid-row: 3 / 4;
-  grid-column: 1 / -1;
+  grid-column: 1 / 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -106,4 +209,40 @@ footer {
 
 .hide{
   display: none;
+}
+
+.show-aside {
+  display: flex;
+}
+
+.two-column {
+  grid-template-columns: 300px 1fr !important;
+}
+
+@media only screen and (max-width: 1000px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  header {
+    button {
+      display: flex;
+      align-items: center;
+    }
+    h1 {
+      margin-left: 0px;
+    }
+  }
+
+  aside {
+    display: none;
+    width: 300px;
+  }
+
+  main {
+    grid-column: auto;
+  }
+}
+
+ion-icon {
+  pointer-events: none;
 }
