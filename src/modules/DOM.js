@@ -17,23 +17,15 @@ const dom = (() => {
     sidebarDynamic.append(newItem);
   }
 
-  function resetSideBarProjects() {
-    while (sidebarDynamic.firstChild) {
-      sidebarDynamic.removeChild(sidebarDynamic.lastChild);
-    }
-  }
-
   function renderProjectUI(projectName) {
     const container = document.createElement("div");
     container.classList.add("dynamic-item-container");
-
     // leftside
     const button = document.createElement("button");
     button.classList.add("dynamic-button");
 
     const buttonIcon = document.createElement("ion-icon");
     buttonIcon.setAttribute("name", "calendar-clear-outline");
-
     // rightside
     const rightSide = document.createElement("div");
 
@@ -64,10 +56,26 @@ const dom = (() => {
     modal.renderNewProjectModal();
   }
 
+  // sidebar inactive
+  function resetSideBarStatus() {
+    const btn = document.querySelectorAll(".dynamic-button, .static-button");
+    btn.forEach((b) => {
+      b.classList.remove("active");
+      b.parentElement.classList.remove("active");
+    });
+  }
+
+  // sidebar active
+  function activeSidebarStatus(element) {
+    element.classList.add("active");
+  }
+
   return {
     newProject,
     renderSideBarProjects,
     appendSideBarProjects,
+    resetSideBarStatus,
+    activeSidebarStatus,
   };
 })();
 
