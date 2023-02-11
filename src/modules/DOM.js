@@ -3,17 +3,9 @@ import { Storage } from "./storage";
 
 const dom = (() => {
   //
-  const dynamicProjectContainer = document.querySelector(".sidebar-dynamic");
-  // sidebar buttons
-  const sidebarProjects = document.querySelectorAll(
-    "div.sidebar-static>button, .dynamic-item-container"
-  );
-  const btnEditProject = document.querySelectorAll(
-    "button[title='Edit Project']"
-  );
-  const btnRemoveProject = document.querySelectorAll(
-    "button[title='Remove Project']"
-  );
+  const sidebarDynamic = document.querySelector(".sidebar-dynamic");
+
+  //
 
   // sidebar functions
   function clickProject(locator) {
@@ -34,8 +26,20 @@ const dom = (() => {
   }
 
   function renderSideBarProjects() {
-    // console.log(Storage.projectList);
+    resetSideBarProjects();
 
+    for (let i = 0; i < Storage.projectList.length; i++) {
+      sidebarDynamic.append(renderProjectUI(Storage.projectList[i]));
+    }
+  }
+
+  function resetSideBarProjects() {
+    while (sidebarDynamic.firstChild) {
+      sidebarDynamic.removeChild(sidebarDynamic.lastChild);
+    }
+  }
+
+  function renderProjectUI(projectName) {
     const container = document.createElement("div");
     container.classList.add("dynamic-item-container");
 
@@ -64,17 +68,11 @@ const dom = (() => {
 
     rightSide.append(btnEdit, btnRemove);
 
-    button.append(buttonIcon, " Project Two");
+    button.append(buttonIcon, projectName);
 
     container.append(button, rightSide);
 
-    dynamicProjectContainer.append(container);
-
-    // console.log(
-    //   document.querySelectorAll(
-    //     "div.sidebar-static>button, .dynamic-item-container"
-    //   )
-    // );
+    return container;
   }
 
   // sidebar new project
@@ -128,6 +126,8 @@ const dom = (() => {
 
     modalLabel.append(modalTitle, modalInput);
     modalContent.append(modalLabel);
+
+    modalInput.focus();
   }
 
   function submitModal() {
@@ -140,12 +140,10 @@ const dom = (() => {
   }
 
   return {
-    renderSideBarProjects,
-    sidebarProjects,
-    clickProject,
     newProject,
     toggleModal,
     submitModal,
+    renderSideBarProjects,
   };
 })();
 

@@ -1,6 +1,5 @@
 import "./css/styles.scss";
 import { dom } from "./modules/DOM";
-import { sideProjectListener } from "./modules/listeners";
 // const test = document.querySelector("#sidbar-toggle");
 // test.addEventListener("click", (e) => {
 //   const aside = document.querySelector("aside");
@@ -9,9 +8,8 @@ import { sideProjectListener } from "./modules/listeners";
 //   const container = document.querySelector(".container");
 //   container.classList.toggle("two-column");
 // });
-sideProjectListener();
-
-dom.renderSideBarProjects();
+// dom.renderSideBarProjects();
+// dom.renderSideBarProjects();
 
 // document.addEventListener("click", (e) => {
 //   console.log(e.target);
@@ -28,3 +26,10 @@ dom.renderSideBarProjects();
 // );
 
 // console.log(dom.sidebarProjects);
+// console.log(document.querySelector(".sidebar-dynamic"));
+
+//
+
+// console.log(document.querySelector("button"));
+
+dom.renderSideBarProjects();
