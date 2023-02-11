@@ -1,5 +1,4 @@
 import { Storage } from "./storage";
-import { dom } from "./DOM";
 
 const modal = (() => {
   // modal functions
