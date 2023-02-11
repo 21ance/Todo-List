@@ -35,24 +35,10 @@
             <button title="Remove Project"><ion-icon name="trash-outline"></ion-icon></button>
           </div>
         </div>
-      </div>
-      <div class="sidebar-dynamic">
         <div class="dynamic-item-container">
           <button>
             <ion-icon name="calendar-clear-outline"></ion-icon>
-            <span>Project Two</span>
-          </button>
-          <div>
-            <button title="Edit Project"><ion-icon name="create-outline"></ion-icon></button>
-            <button title="Remove Project"><ion-icon name="trash-outline"></ion-icon></button>
-          </div>
-        </div>
-      </div>
-      <div class="sidebar-dynamic">
-        <div class="dynamic-item-container">
-          <button>
-            <ion-icon name="calendar-clear-outline"></ion-icon>
-            <span>Project Three</span>
+            Project Two
           </button>
           <div>
             <button title="Edit Project"><ion-icon name="create-outline"></ion-icon></button>
@@ -86,9 +72,9 @@
   </div>
   <div class="modal" id="modal">
     <div class="modal-content">
-      <header>Dynamic Text</header>
-      <form action="">
-        <label for="Title">
+      <form action="" id="modalForm">
+        <header>Dynamic Text</header>
+        <!-- <label for="Title">
           <span>Title</span>
           <input type="text" placeholder="Enter title">
         </label>
@@ -99,12 +85,13 @@
         <label for="Due date">
           <span>Due date</span>
           <input type="date">
-        </label>
+        </label> -->
+        <main></main>
+        <footer>
+          <button type="button" id="btnCancel">Cancel</button>
+          <button type="submit" id="btnDynamic">Dynamic</button>
+        </footer>
       </form>
-      <footer>
-        <button id="btnCancel">Cancel</button>
-        <button id="btnDynamic">Dynamic</button>
-      </footer>
     </div>
   </div>
 </body>
