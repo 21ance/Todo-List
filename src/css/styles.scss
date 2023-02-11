@@ -117,47 +117,37 @@ $transition-time: 0.3s;
       }
     }
 
-    .sidebar-dynamic {
-      .dynamic-item-container{
-        // almost same as .sidebar-static button
-        // to do: sass extend
-        background-color: $main-color;
-        border-radius: 4px;
-        width: 250px;
-        font-size: 1.2rem;
-        display: flex;
-        align-items: center;
-        // gap: 5px;
-        border: 1px solid $sidebar-color;
-        margin-bottom: 15px;
-        // padding: 10px;
-        justify-content: space-between;
-
-        & > button, & > div  {
-          padding: 10px;
-        }
-
-        button {
-          flex: 1;
-          text-align: start;
-          color: inherit;
-          background-color: transparent;
-          max-width: 250px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-
-        div button:hover{
-          scale: 1.2;
-          transition: $transition-time;
-        }
+    .dynamic-item-container{
+      background-color: $main-color;
+      border-radius: 4px;
+      width: 250px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      border: 1px solid $sidebar-color;
+      justify-content: space-between;
+      & > button, & > div  {
+       padding: 10px;
+      }
+      button {
+      flex: 1;
+      text-align: start;
+      color: inherit;
+      background-color: transparent;
+      max-width: 250px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       }
 
-      .dynamic-item-container:hover{
-        transition: $transition-time;
-        border: 1px solid $dark-color;
+      div button:hover{
+      scale: 1.2;
+      transition: $transition-time;
       }
+    }
+    .dynamic-item-container:hover{
+      transition: $transition-time;
+      border: 1px solid $dark-color;
     }
   }
 
@@ -261,7 +251,7 @@ $transition-time: 0.3s;
       font-weight: bold;
     }
 
-    form {
+    main {
       padding: 15px 20px;
       display: flex;
       flex-direction: column;

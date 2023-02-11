@@ -1,4 +1,5 @@
 import "./css/styles.scss";
+import { dom } from "./modules/DOM";
 import { sideProjectListener } from "./modules/listeners";
 // const test = document.querySelector("#sidbar-toggle");
 // test.addEventListener("click", (e) => {
@@ -10,6 +11,8 @@ import { sideProjectListener } from "./modules/listeners";
 // });
 sideProjectListener();
 
+dom.renderSideBarProjects();
+
 // document.addEventListener("click", (e) => {
 //   console.log(e.target);
 
@@ -17,3 +20,11 @@ sideProjectListener();
 //     console.log("asdasadas");
 //   }
 // });
+
+// console.log(
+//   document.querySelectorAll(
+//     "div.sidebar-static>button, .dynamic-item-container"
+//   )
+// );
+
+// console.log(dom.sidebarProjects);
