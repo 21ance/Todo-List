@@ -1,36 +1,25 @@
-import { sideProjectListener } from "./listeners";
+import { modal } from "./modal";
 import { Storage } from "./storage";
+// import { sidebarListener } from "./listeners";
 
 const dom = (() => {
-  //
   const sidebarDynamic = document.querySelector(".sidebar-dynamic");
 
-  //
-
-  // sidebar functions
-  function clickProject(locator) {
-    removeActiveState();
-    setActiveState(locator);
-  }
-
-  function setActiveState(locator) {
-    console.log(locator);
-    locator.classList.toggle("active");
-  }
-
-  function removeActiveState() {
-    sidebarProjects.forEach((project) => {
-      project.classList.remove("active");
-      project.parentElement.classList.remove("active");
-    });
-  }
-
+  // for initial load
   function renderSideBarProjects() {
-    resetSideBarProjects();
+    // resetSideBarProjects();
 
     for (let i = 0; i < Storage.projectList.length; i++) {
       sidebarDynamic.append(renderProjectUI(Storage.projectList[i]));
     }
+  }
+
+  // for submit new project
+  function appendSideBarProjects() {
+    const newItem = renderProjectUI(
+      Storage.projectList[Storage.projectList.length - 1]
+    );
+    sidebarDynamic.append(newItem);
   }
 
   function resetSideBarProjects() {
@@ -67,83 +56,51 @@ const dom = (() => {
     btnRemove.append(btnRemoveIcon);
 
     rightSide.append(btnEdit, btnRemove);
-
     button.append(buttonIcon, projectName);
-
     container.append(button, rightSide);
 
     return container;
   }
+  // sidebar projects intial load / reload on add
+  // renderSideBarProjects();
+  // onlick / css effects on sidebar
+  renderSideBarProjects();
+  //.sidebar-static > button
+  // const sidebarProjects = document.querySelectorAll(
+  //   ".sidebar-static>button, .dynamic-item-container"
+  // );
+  const btnEditProject = document.querySelectorAll(
+    "button[title='Edit Project']"
+  );
+  const btnRemoveProject = document.querySelectorAll(
+    "button[title='Remove Project']"
+  );
+  function clickProject(locator) {
+    // removeActiveState();
+    setActiveState(locator);
+  }
+
+  function setActiveState(locator) {
+    locator.classList.toggle("active");
+  }
+
+  function removeActiveState(element) {
+    element.forEach((project) => {
+      project.classList.remove("active");
+    });
+  }
 
   // sidebar new project
   function newProject() {
-    revealModal("New Project", "Create Project", "btnCreateProject");
-    renderNewProjectModal();
-  }
-
-  // main content functions
-  function loadMainContent() {
-    // console.log("testMain");
-  }
-
-  // modal functions
-  const modal = document.querySelector(".modal");
-  const modalForm = document.querySelector("form");
-  const modalHeader = document.querySelector(".modal-content header");
-  const modalContent = document.querySelector("form main");
-  const btnCancel = document.querySelector("#btnCancel");
-  const btnDynamic = document.querySelector("#btnDynamic");
-
-  function revealModal(modalTitle, btnName, btnId) {
-    resetModal();
-    toggleModal();
-
-    modalHeader.textContent = `${modalTitle}`;
-    btnDynamic.textContent = `${btnName}`;
-    btnDynamic.setAttribute("id", btnId);
-  }
-
-  function toggleModal() {
-    modal.classList.toggle("show-modal");
-  }
-
-  function resetModal() {
-    // remove all element of modalContent
-    for (let i = 0; i < modalContent.childElementCount; i++) {
-      modalContent.removeChild(modalContent.lastChild);
-    }
-  }
-
-  // modal content based on shz
-  function renderNewProjectModal() {
-    const modalLabel = document.createElement("label");
-    const modalTitle = document.createElement("span");
-    const modalInput = document.createElement("input");
-
-    modalTitle.textContent = "Title*";
-    modalInput.placeholder = "Enter Title";
-    modalInput.required = true;
-
-    modalLabel.append(modalTitle, modalInput);
-    modalContent.append(modalLabel);
-
-    modalInput.focus();
-  }
-
-  function submitModal() {
-    if (document.getElementById("btnCreateProject")) {
-      const newProject = Storage.newProjectObject(
-        document.querySelector("input[placeholder='Enter Title']").value
-      );
-      console.log("new proj added to storage");
-    }
+    modal.revealModal("New Project", "Create Project", "btnCreateProject");
+    modal.renderNewProjectModal();
   }
 
   return {
     newProject,
-    toggleModal,
-    submitModal,
     renderSideBarProjects,
+    appendSideBarProjects,
+    clickProject,
   };
 })();
 

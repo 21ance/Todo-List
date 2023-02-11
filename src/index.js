@@ -1,5 +1,6 @@
 import "./css/styles.scss";
 import { dom } from "./modules/DOM";
+import { sidebarListener } from "./modules/listeners";
 // const test = document.querySelector("#sidbar-toggle");
 // test.addEventListener("click", (e) => {
 //   const aside = document.querySelector("aside");
@@ -31,5 +32,7 @@ import { dom } from "./modules/DOM";
 //
 
 // console.log(document.querySelector("button"));
+// console.log(document.querySelectorAll("button"));
 
-dom.renderSideBarProjects();
+// dom.renderSideBarProjects();
+// sidebarListener();
