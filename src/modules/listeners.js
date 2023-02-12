@@ -3,7 +3,7 @@ import { modal } from "./modal";
 // might have to remov storage
 import { Storage } from "./storage";
 import { editProject, newProject, removeProject } from "./projects";
-import { newTodo } from "./todos";
+import { newTodo, removeTodo } from "./todos";
 
 // modal form submit
 document.addEventListener("submit", (e) => {
@@ -70,5 +70,29 @@ document.addEventListener("click", (e) => {
   // main - todos event listeners
   if (target.title === "Add Todo") {
     newTodo();
+  }
+
+  // actual todos
+  // checkbox
+  if (target.type === "checkbox") {
+    target.nextSibling.classList.toggle("checked");
+    // target.classList.toggle("asdsa");
+  }
+  // console.log(target);
+
+  // if (target.className === "todo-item-left") {
+  //   target.classList.toggle("checked");
+  // }
+
+  //rightside buttons
+  if (target.title === "Edit Item") {
+    console.log("Edit Item");
+  }
+  if (target.title === "Remove Item") {
+    removeTodo(target);
+    document.querySelector("#btnRemoveTask").focus();
+  }
+  if (target.title === "Expand Item") {
+    console.log("Expand Item");
   }
 });

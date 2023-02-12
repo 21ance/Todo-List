@@ -109,10 +109,19 @@ const modal = (() => {
   }
 
   // main - todos
+  let todoDom;
   function renderAddTodo() {
     dynamicForm("Title", "input", "text", true, 20);
     dynamicForm("Description", "textarea");
     dynamicForm("Date", "input", "date");
+  }
+
+  function renderRemoveTodo(target) {
+    todoDom = target;
+    const todoObject = Storage.allTodoList[target.dataset.index];
+    const todoWarn = document.createElement("span");
+    todoWarn.innerHTML = `Are you sure? <br> Task <b>${todoObject.title}</b> will be removed!`;
+    modalContent.append(todoWarn);
   }
 
   // dynamic submit
@@ -131,7 +140,7 @@ const modal = (() => {
       Storage.projectList.splice(projectDOM.dataset.index, 1);
       localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
       dom.renderSideBarProjects();
-      dom.initializeMain();
+      // dom.initializeMain();
     }
 
     if (document.getElementById("btnEditProject")) {
@@ -142,7 +151,7 @@ const modal = (() => {
       // dom.resetSideBarStatus();
       // dom.activeSidebarStatus(projectDOM.parentElement.parentElement);
       dom.renderSideBarProjects();
-      dom.initializeMain();
+      // dom.initializeMain();
     }
 
     // todos
@@ -160,6 +169,13 @@ const modal = (() => {
       dom.appendTodoItem();
     }
 
+    if (document.getElementById("btnRemoveTask")) {
+      Storage.allTodoList.splice(todoDom.dataset.index, 1);
+      localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
+
+      dom.renderTodoItem();
+    }
+
     modalForm.reset();
   }
 
@@ -173,6 +189,7 @@ const modal = (() => {
     submitModal,
     //
     renderAddTodo,
+    renderRemoveTodo,
   };
 })();
 

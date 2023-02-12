@@ -21,4 +21,17 @@ function newTodo() {
   modal.renderAddTodo();
 }
 
-export { newTodo };
+function editTodo() {
+  //
+}
+
+function removeTodo(target) {
+  modal.revealModal("Delete Task", "Confirm", "btnRemoveTask");
+  modal.renderRemoveTodo(target);
+}
+
+function expandTodo() {
+  //
+}
+
+export { newTodo, editTodo, removeTodo, expandTodo };

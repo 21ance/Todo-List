@@ -165,30 +165,31 @@ $transition-time: 0.3s;
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     overflow: auto;
+    padding: 0 10vw;
+
+    .todo-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 3px solid $dark-color;
+      margin-top: 20px;
+
+      h1 {
+        padding: 0 10px;
+        font-size: 3rem;
+        font-weight: normal;
+      }
+
+      button {
+        background-color: transparent;
+        font-size: 2rem;
+        align-self: flex-end;
+      }
+    }
 
     .todos {
       display: flex;
       flex-direction: column;
-      margin: 0 10vw;
       margin-top: 20px;
-
-      .todo-header {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 3px solid $dark-color;
-
-        h1 {
-          padding: 0 10px;
-          font-size: 3rem;
-          font-weight: normal;
-        }
-
-        button {
-          background-color: transparent;
-          font-size: 2rem;
-          align-self: flex-end;
-        }
-      }
 
       .todo-item{
         display: flex;
@@ -198,7 +199,13 @@ $transition-time: 0.3s;
         border-bottom: solid $dark-color;
         border-width: .1px;
 
+        input {
+          accent-color: black;
+        }
+        
         .todo-item-left {
+          display: flex;
+          gap: 5px;
           cursor: pointer;
           width: 300px;
           overflow: hidden;
@@ -366,6 +373,10 @@ button {
 
 .active:hover {
   opacity: 0.8;
+}
+
+.checked{
+  text-decoration: line-through;
 }
 
 @media only screen and (max-width: 1000px) {

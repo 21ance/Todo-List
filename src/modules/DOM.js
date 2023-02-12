@@ -85,7 +85,7 @@ const dom = (() => {
 
   // todo header
   function renderMain(header) {
-    resetMain();
+    resetHeader();
 
     todoContainer.classList.add("todos");
 
@@ -93,16 +93,19 @@ const dom = (() => {
     h1.textContent = header;
 
     todoHeader.append(h1);
-    todoContainer.append(todoHeader);
-    main.append(todoContainer);
+    // todoContainer.append(todoHeader);
+    main.append(todoHeader, todoContainer);
+  }
+
+  function resetHeader() {
+    while (todoHeader.firstChild) {
+      todoHeader.removeChild(todoHeader.lastChild);
+    }
   }
 
   function resetMain() {
     while (todoContainer.firstChild) {
       todoContainer.removeChild(todoContainer.lastChild);
-    }
-    while (todoHeader.firstChild) {
-      todoHeader.removeChild(todoHeader.lastChild);
     }
   }
 
@@ -111,19 +114,23 @@ const dom = (() => {
     const newItem = renderTodoUI(
       lastTodoObject.checked,
       lastTodoObject.title,
-      lastTodoObject.dueDate
+      lastTodoObject.dueDate,
+      Storage.allTodoList.length - 1
     );
     todoContainer.append(newItem);
   }
 
   function renderTodoItem() {
+    resetMain();
+
     for (let i = 0; i < Storage.allTodoList.length; i++) {
       if (Storage.allTodoList[i].project === main.id || main.id === "All") {
         todoContainer.append(
           renderTodoUI(
             Storage.allTodoList[i].checked,
             Storage.allTodoList[i].title,
-            Storage.allTodoList[i].dueDate
+            Storage.allTodoList[i].dueDate,
+            i
           )
         );
       }
@@ -131,8 +138,10 @@ const dom = (() => {
     }
   }
 
-  function renderTodoUI(status, title, date) {
+  function renderTodoUI(status, title, date, identifier) {
     const todoItem = document.createElement("div");
+    todoItem.setAttribute("data-index", identifier);
+
     todoItem.classList.add("todo-item");
     // left
     const todoItemLeft = document.createElement("div");
@@ -140,22 +149,28 @@ const dom = (() => {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = status;
+    checkbox.setAttribute("data-index", identifier);
     const todoDetails = document.createElement("span");
     todoDetails.textContent = title;
     todoItemLeft.append(checkbox, todoDetails);
+
+    if (checkbox.checked) {
+      checkbox.nextSibling.classList.add("checked");
+    }
+
     // right
     const todoItemRight = document.createElement("div");
     todoItemRight.classList.add("todo-item-right");
     const todoDate = document.createElement("span");
     todoDate.textContent = date;
     const btnEdit = document.createElement("button");
-    // btnEdit.setAttribute("data-index", identifier);
+    btnEdit.setAttribute("data-index", identifier);
     btnEdit.title = "Edit Item";
     const btnEditIcon = document.createElement("ion-icon");
     btnEditIcon.setAttribute("name", "create-outline");
     btnEdit.append(btnEditIcon);
     const btnRemove = document.createElement("button");
-    // btnRemove.setAttribute("data-index", identifier);
+    btnRemove.setAttribute("data-index", identifier);
     btnRemove.title = "Remove Item";
     const btnRemoveIcon = document.createElement("ion-icon");
     btnRemoveIcon.setAttribute("name", "trash-outline");
@@ -163,6 +178,7 @@ const dom = (() => {
 
     const btnExpand = document.createElement("button");
     btnExpand.title = "Expand Item";
+    btnExpand.setAttribute("data-index", identifier);
     const btnExpandIcon = document.createElement("ion-icon");
     btnExpandIcon.setAttribute("name", "information-circle-outline");
     btnExpand.append(btnExpandIcon);
