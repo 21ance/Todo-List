@@ -2,9 +2,13 @@ import { modal } from "./modal";
 import { Storage } from "./storage";
 
 const dom = (() => {
+  const allProjects = document.querySelector(
+    ".sidebar-static>button:first-child"
+  );
   const sidebarDynamic = document.querySelector(".sidebar-dynamic");
 
   function renderSideBarProjects() {
+    allProjects.classList.add("active");
     resetSideBarProjects();
     for (let i = 0; i < Storage.projectList.length; i++) {
       sidebarDynamic.append(renderProjectUI(Storage.projectList[i], i));
@@ -73,22 +77,23 @@ const dom = (() => {
     element.classList.add("active");
   }
 
-  renderSideBarProjects();
-
   // main
   const main = document.querySelector(".container > main");
   const todoContainer = document.createElement("div");
+  const todoHeader = document.createElement("div");
+  todoHeader.classList.add("todo-header");
 
-  function renderMain() {
+  function renderMain(header) {
+    resetMain();
+
     todoContainer.classList.add("todos");
 
     const h1 = document.createElement("h1");
-    h1.textContent = "All";
+    h1.textContent = header;
 
-    todoContainer.append(h1);
+    todoHeader.append(h1);
+    todoContainer.append(todoHeader);
     main.append(todoContainer);
-
-    todoContainer.append(renderTodoItem());
   }
 
   function renderTodoItem() {
@@ -140,11 +145,34 @@ const dom = (() => {
 
     //
     todoItem.append(todoItemLeft, todoItemRight);
-
-    return todoItem;
+    todoContainer.append(todoItem);
   }
 
-  renderMain();
+  function resetMain() {
+    while (todoContainer.firstChild) {
+      todoContainer.removeChild(todoContainer.lastChild);
+    }
+    while (todoHeader.firstChild) {
+      todoHeader.removeChild(todoHeader.lastChild);
+    }
+  }
+
+  function appendAddTodo() {
+    const btnAddTodo = document.createElement("button");
+    btnAddTodo.id = "btnAddTodo";
+    btnAddTodo.title = "Add Todo";
+
+    const btnAddTodoIcon = document.createElement("ion-icon");
+    btnAddTodoIcon.setAttribute("name", "add-circle-outline");
+
+    btnAddTodo.append(btnAddTodoIcon);
+    todoHeader.append(btnAddTodo);
+  }
+
+  function initializeMain() {
+    renderMain("All");
+    renderTodoItem();
+  }
 
   return {
     renderSideBarProjects,
@@ -152,6 +180,10 @@ const dom = (() => {
     resetSideBarStatus,
     activeSidebarStatus,
     //
+    initializeMain,
+    renderMain,
+    renderTodoItem,
+    appendAddTodo,
   };
 })();
 

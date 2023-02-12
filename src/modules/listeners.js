@@ -3,6 +3,7 @@ import { modal } from "./modal";
 // might have to remov storage
 import { Storage } from "./storage";
 import { editProject, newProject, removeProject } from "./projects";
+import { newTodo } from "./todos";
 
 // modal form submit
 document.addEventListener("submit", (e) => {
@@ -34,15 +35,22 @@ document.addEventListener("click", (e) => {
     modal.toggleModal();
   }
 
-  // sidebar event listeners
+  // sidebar - projects event listeners
   if (target.classList.contains("static-button")) {
     dom.resetSideBarStatus();
     dom.activeSidebarStatus(target);
+
+    dom.renderMain(target.textContent);
+    dom.renderTodoItem();
   }
 
   if (target.classList.contains("dynamic-button")) {
     dom.resetSideBarStatus();
     dom.activeSidebarStatus(target.parentElement);
+    //
+    dom.renderMain(target.parentElement.textContent);
+    dom.appendAddTodo();
+    dom.renderTodoItem();
   }
 
   if (target === btnNewProject) {
@@ -55,5 +63,11 @@ document.addEventListener("click", (e) => {
 
   if (target.title === "Remove Project") {
     removeProject(target);
+    document.querySelector("#btnRemoveProject").focus();
+  }
+
+  // main - todos event listeners
+  if (target.title === "Add Todo") {
+    newTodo();
   }
 });

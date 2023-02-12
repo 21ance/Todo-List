@@ -31,10 +31,16 @@ const modal = (() => {
 
   function resetModal() {
     // remove all element of modalContent
-    for (let i = 0; i < modalContent.childElementCount; i++) {
+    // for (let i = 0; i < modalContent.childElementCount; i++) {
+    //   modalContent.removeChild(modalContent.lastChild);
+    // }
+    while (modalContent.firstChild) {
       modalContent.removeChild(modalContent.lastChild);
     }
   }
+
+  // sidebar - projects
+  let projectDOM;
 
   // new project
   function renderNewProject() {
@@ -46,11 +52,8 @@ const modal = (() => {
     modalLabel.append(modalTitle, modalInput);
     modalContent.append(modalLabel);
 
-    modalInput.focus();
+    setFocus();
   }
-
-  // saves shz
-  let projectDOM;
 
   // remove project
   function renderRemoveProject(element) {
@@ -61,7 +64,6 @@ const modal = (() => {
     projectName.innerHTML = `Are you sure? <br> Project <b>${elementIndex}</b> will be removed!`;
 
     modalContent.append(projectName);
-    btnDynamic.focus();
   }
 
   // edit project
@@ -77,11 +79,45 @@ const modal = (() => {
     modalLabel.append(modalTitle, modalInput);
     modalContent.append(modalLabel);
 
-    modalInput.focus();
+    setFocus();
+  }
+
+  // set keyboard focus on first form input
+  function setFocus() {
+    const focusElement = document.querySelector(
+      "form label:nth-child(1) input"
+    );
+    focusElement.focus();
   }
 
   //
+  function dynamicForm(title, input, inputType, isRequired, maxlength) {
+    const formLabel = document.createElement("label");
+    const fromTitle = document.createElement("span");
+    const formInput = document.createElement(`${input}`);
+
+    fromTitle.textContent = title;
+    formInput.required = isRequired;
+    formInput.placeholder = `Enter ${title}`;
+    formInput.setAttribute("maxlength", maxlength);
+    formInput.setAttribute("type", inputType);
+
+    formLabel.append(fromTitle, formInput);
+    modalContent.append(formLabel);
+
+    setFocus();
+  }
+
+  // main - todos
+  function renderAddTodo() {
+    dynamicForm("Title", "input", "text", true, 20);
+    dynamicForm("Description", "textarea");
+    dynamicForm("Date", "input", "date");
+  }
+
+  // dynamic submit
   function submitModal() {
+    // projects
     if (document.getElementById("btnCreateProject")) {
       const newProject = Storage.newProjectObject(
         document.querySelector("input[placeholder='Enter Title']").value
@@ -93,6 +129,7 @@ const modal = (() => {
       Storage.projectList.splice(projectDOM.dataset.index, 1);
       localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
       dom.renderSideBarProjects();
+      dom.initializeMain();
     }
 
     if (document.getElementById("btnEditProject")) {
@@ -102,6 +139,15 @@ const modal = (() => {
       // console.log(projectDOM.parentElement);
       // dom.resetSideBarStatus();
       // dom.activeSidebarStatus(projectDOM.parentElement.parentElement);
+      dom.renderSideBarProjects();
+      dom.initializeMain();
+    }
+
+    // todos
+    if (document.getElementById("btnAddTask")) {
+      console.log(document.querySelector("form input[type='text']").value);
+      console.log(document.querySelector("form textarea").value);
+      console.log(document.querySelector("form input[type='date']").value);
     }
 
     modalForm.reset();
@@ -114,6 +160,8 @@ const modal = (() => {
     renderEditProject,
     toggleModal,
     submitModal,
+    //
+    renderAddTodo,
   };
 })();
 

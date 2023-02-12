@@ -172,11 +172,22 @@ $transition-time: 0.3s;
       margin: 0 10vw;
       margin-top: 20px;
 
-      h1 {
-        padding: 0 30px;
-        font-size: 3rem;
-        font-weight: normal;
+      .todo-header {
+        display: flex;
+        justify-content: space-between;
         border-bottom: 3px solid $dark-color;
+
+        h1 {
+          padding: 0 10px;
+          font-size: 3rem;
+          font-weight: normal;
+        }
+
+        button {
+          background-color: transparent;
+          font-size: 2rem;
+          align-self: flex-end;
+        }
       }
 
       .todo-item{
