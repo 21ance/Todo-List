@@ -2,6 +2,7 @@ import { modal } from "./modal";
 
 // sidebar new project
 function newProject() {
+  modal.modalForm.reset();
   modal.revealModal("New Project", "Add", "btnCreateProject");
   modal.renderNewProject();
 }

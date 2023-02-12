@@ -119,13 +119,15 @@ const modal = (() => {
   function submitModal() {
     // projects
     if (document.getElementById("btnCreateProject")) {
-      const newProject = Storage.newProjectObject(
+      Storage.newProjectObject(
         document.querySelector("input[placeholder='Enter Title']").value
       );
       dom.appendSideBarProjects();
     }
 
     if (document.getElementById("btnRemoveProject")) {
+      // remember to remove todos under deleted project/s
+      // console.log(projectDOM.parentElement.parentElement.textContent);
       Storage.projectList.splice(projectDOM.dataset.index, 1);
       localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
       dom.renderSideBarProjects();
@@ -145,15 +147,24 @@ const modal = (() => {
 
     // todos
     if (document.getElementById("btnAddTask")) {
-      console.log(document.querySelector("form input[type='text']").value);
-      console.log(document.querySelector("form textarea").value);
-      console.log(document.querySelector("form input[type='date']").value);
+      Storage.newTodoObject(
+        dom.main.id,
+        false,
+        document.querySelector("form input[type='text']").value,
+        document.querySelector("form textarea").value,
+        document.querySelector("form input[type='date']").value
+      );
+      localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
+      // console.log(dom.main.id);
+      // dom.renderTodoItem();
+      dom.appendTodoItem();
     }
 
     modalForm.reset();
   }
 
   return {
+    modalForm,
     revealModal,
     renderNewProject,
     renderRemoveProject,

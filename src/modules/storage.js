@@ -2,9 +2,10 @@ const Storage = (() => {
   let allTodoList = JSON.parse(localStorage.getItem("All") || "[]");
   let projectList = JSON.parse(localStorage.getItem("Projects") || "[]");
 
-  const newTodoObject = (project, title, description, dueDate) => {
+  const newTodoObject = (project, checked, title, description, dueDate) => {
     const todoItem = {
       project,
+      checked,
       title,
       description,
       dueDate,

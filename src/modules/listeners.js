@@ -39,7 +39,7 @@ document.addEventListener("click", (e) => {
   if (target.classList.contains("static-button")) {
     dom.resetSideBarStatus();
     dom.activeSidebarStatus(target);
-
+    dom.main.id = target.textContent;
     dom.renderMain(target.textContent);
     dom.renderTodoItem();
   }
@@ -48,8 +48,9 @@ document.addEventListener("click", (e) => {
     dom.resetSideBarStatus();
     dom.activeSidebarStatus(target.parentElement);
     //
+    dom.main.id = target.textContent;
     dom.renderMain(target.parentElement.textContent);
-    dom.appendAddTodo();
+    dom.appendNewTodoButton();
     dom.renderTodoItem();
   }
 

@@ -83,6 +83,7 @@ const dom = (() => {
   const todoHeader = document.createElement("div");
   todoHeader.classList.add("todo-header");
 
+  // todo header
   function renderMain(header) {
     resetMain();
 
@@ -96,38 +97,63 @@ const dom = (() => {
     main.append(todoContainer);
   }
 
-  function renderTodoItem() {
-    // console.log(document.querySelector(".container > main"));
+  function resetMain() {
+    while (todoContainer.firstChild) {
+      todoContainer.removeChild(todoContainer.lastChild);
+    }
+    while (todoHeader.firstChild) {
+      todoHeader.removeChild(todoHeader.lastChild);
+    }
+  }
 
+  function appendTodoItem() {
+    const lastTodoObject = Storage.allTodoList[Storage.allTodoList.length - 1];
+    const newItem = renderTodoUI(
+      lastTodoObject.checked,
+      lastTodoObject.title,
+      lastTodoObject.dueDate
+    );
+    todoContainer.append(newItem);
+  }
+
+  function renderTodoItem() {
+    for (let i = 0; i < Storage.allTodoList.length; i++) {
+      if (Storage.allTodoList[i].project === main.id || main.id === "All") {
+        todoContainer.append(
+          renderTodoUI(
+            Storage.allTodoList[i].checked,
+            Storage.allTodoList[i].title,
+            Storage.allTodoList[i].dueDate
+          )
+        );
+      }
+      // TO ADD: TODAY AND UPCOMING
+    }
+  }
+
+  function renderTodoUI(status, title, date) {
     const todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");
-
     // left
     const todoItemLeft = document.createElement("div");
     todoItemLeft.classList.add("todo-item-left");
-
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-
+    checkbox.checked = status;
     const todoDetails = document.createElement("span");
-    todoDetails.textContent = "This is a todo detail";
-
+    todoDetails.textContent = title;
     todoItemLeft.append(checkbox, todoDetails);
-
     // right
     const todoItemRight = document.createElement("div");
     todoItemRight.classList.add("todo-item-right");
-
     const todoDate = document.createElement("span");
-    todoDate.textContent = "02/10/2023";
-
+    todoDate.textContent = date;
     const btnEdit = document.createElement("button");
     // btnEdit.setAttribute("data-index", identifier);
     btnEdit.title = "Edit Item";
     const btnEditIcon = document.createElement("ion-icon");
     btnEditIcon.setAttribute("name", "create-outline");
     btnEdit.append(btnEditIcon);
-
     const btnRemove = document.createElement("button");
     // btnRemove.setAttribute("data-index", identifier);
     btnRemove.title = "Remove Item";
@@ -145,19 +171,14 @@ const dom = (() => {
 
     //
     todoItem.append(todoItemLeft, todoItemRight);
-    todoContainer.append(todoItem);
+    // todoContainer.append(todoItem);
+    // const newItem = renderTodoUI(
+    //   // Storage.allTodoList[Storage.projectList.length - 1],
+    // )
+    return todoItem;
   }
 
-  function resetMain() {
-    while (todoContainer.firstChild) {
-      todoContainer.removeChild(todoContainer.lastChild);
-    }
-    while (todoHeader.firstChild) {
-      todoHeader.removeChild(todoHeader.lastChild);
-    }
-  }
-
-  function appendAddTodo() {
+  function appendNewTodoButton() {
     const btnAddTodo = document.createElement("button");
     btnAddTodo.id = "btnAddTodo";
     btnAddTodo.title = "Add Todo";
@@ -170,20 +191,23 @@ const dom = (() => {
   }
 
   function initializeMain() {
-    renderMain("All");
+    renderMain(main.id);
     renderTodoItem();
   }
 
   return {
+    main,
     renderSideBarProjects,
     appendSideBarProjects,
     resetSideBarStatus,
     activeSidebarStatus,
     //
-    initializeMain,
     renderMain,
+    initializeMain,
+    renderTodoUI,
+    appendNewTodoButton,
+    appendTodoItem,
     renderTodoItem,
-    appendAddTodo,
   };
 })();
 
