@@ -75,11 +75,83 @@ const dom = (() => {
 
   renderSideBarProjects();
 
+  // main
+  const main = document.querySelector(".container > main");
+  const todoContainer = document.createElement("div");
+
+  function renderMain() {
+    todoContainer.classList.add("todos");
+
+    const h1 = document.createElement("h1");
+    h1.textContent = "All";
+
+    todoContainer.append(h1);
+    main.append(todoContainer);
+
+    todoContainer.append(renderTodoItem());
+  }
+
+  function renderTodoItem() {
+    // console.log(document.querySelector(".container > main"));
+
+    const todoItem = document.createElement("div");
+    todoItem.classList.add("todo-item");
+
+    // left
+    const todoItemLeft = document.createElement("div");
+    todoItemLeft.classList.add("todo-item-left");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+    const todoDetails = document.createElement("span");
+    todoDetails.textContent = "This is a todo detail";
+
+    todoItemLeft.append(checkbox, todoDetails);
+
+    // right
+    const todoItemRight = document.createElement("div");
+    todoItemRight.classList.add("todo-item-right");
+
+    const todoDate = document.createElement("span");
+    todoDate.textContent = "02/10/2023";
+
+    const btnEdit = document.createElement("button");
+    // btnEdit.setAttribute("data-index", identifier);
+    btnEdit.title = "Edit Item";
+    const btnEditIcon = document.createElement("ion-icon");
+    btnEditIcon.setAttribute("name", "create-outline");
+    btnEdit.append(btnEditIcon);
+
+    const btnRemove = document.createElement("button");
+    // btnRemove.setAttribute("data-index", identifier);
+    btnRemove.title = "Remove Item";
+    const btnRemoveIcon = document.createElement("ion-icon");
+    btnRemoveIcon.setAttribute("name", "trash-outline");
+    btnRemove.append(btnRemoveIcon);
+
+    const btnExpand = document.createElement("button");
+    btnExpand.title = "Expand Item";
+    const btnExpandIcon = document.createElement("ion-icon");
+    btnExpandIcon.setAttribute("name", "information-circle-outline");
+    btnExpand.append(btnExpandIcon);
+
+    todoItemRight.append(todoDate, btnEdit, btnRemove, btnExpand);
+
+    //
+    todoItem.append(todoItemLeft, todoItemRight);
+
+    return todoItem;
+  }
+
+  renderMain();
+
   return {
     renderSideBarProjects,
     appendSideBarProjects,
     resetSideBarStatus,
     activeSidebarStatus,
+    //
   };
 })();
 
