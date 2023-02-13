@@ -135,8 +135,18 @@ const modal = (() => {
     }
 
     if (document.getElementById("btnRemoveProject")) {
-      // remember to remove todos under deleted project/s
-      // console.log(projectDOM.parentElement.parentElement.textContent);
+      // also remove the project and their tasks from all storage
+      for (let i = Storage.allTodoList.length - 1; i >= 0; i--) {
+        if (
+          Storage.projectList[projectDOM.dataset.index] ===
+          Storage.allTodoList[i].project
+        ) {
+          console.log(i);
+          Storage.allTodoList.splice(i, 1);
+          localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
+        }
+      }
+      // remove from projects storage
       Storage.projectList.splice(projectDOM.dataset.index, 1);
       localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
       dom.renderSideBarProjects();
