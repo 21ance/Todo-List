@@ -91,7 +91,7 @@ const modal = (() => {
   }
 
   //
-  function dynamicForm(title, input, inputType, isRequired, maxlength) {
+  function dynamicForm(title, input, inputType, value, isRequired, maxlength) {
     const formLabel = document.createElement("label");
     const fromTitle = document.createElement("span");
     const formInput = document.createElement(`${input}`);
@@ -101,6 +101,11 @@ const modal = (() => {
     formInput.placeholder = `Enter ${title}`;
     formInput.setAttribute("maxlength", maxlength);
     formInput.setAttribute("type", inputType);
+    formInput.value = value;
+
+    if (formInput.type === "date") {
+      formInput.placeholder = value;
+    }
 
     formLabel.append(fromTitle, formInput);
     modalContent.append(formLabel);
@@ -111,8 +116,8 @@ const modal = (() => {
   // main - todos
   let todoDom;
   function renderAddTodo() {
-    dynamicForm("Title", "input", "text", true, 20);
-    dynamicForm("Description", "textarea");
+    dynamicForm("Title", "input", "text", "", true, 20);
+    dynamicForm("Description", "textarea", "", "");
     dynamicForm("Date", "input", "date");
   }
 
@@ -122,6 +127,15 @@ const modal = (() => {
     const todoWarn = document.createElement("span");
     todoWarn.innerHTML = `Are you sure? <br> Task <b>${todoObject.title}</b> will be removed!`;
     modalContent.append(todoWarn);
+  }
+
+  function renderEditTodo(target) {
+    todoDom = target;
+    const todoObject = Storage.allTodoList[target.dataset.index];
+
+    dynamicForm("Title", "input", "text", todoObject.title, true, 20);
+    dynamicForm("Description", "textarea", "", todoObject.description);
+    dynamicForm("Date", "input", "date", todoObject.dueDate);
   }
 
   // dynamic submit
@@ -141,7 +155,6 @@ const modal = (() => {
           Storage.projectList[projectDOM.dataset.index] ===
           Storage.allTodoList[i].project
         ) {
-          console.log(i);
           Storage.allTodoList.splice(i, 1);
           localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
         }
@@ -186,6 +199,19 @@ const modal = (() => {
       dom.renderTodoItem();
     }
 
+    if (document.getElementById("btnEditTask")) {
+      Storage.allTodoList[todoDom.dataset.index].title = document.querySelector(
+        "form input[type='text']"
+      ).value;
+      Storage.allTodoList[todoDom.dataset.index].description =
+        document.querySelector("form textarea").value;
+      Storage.allTodoList[todoDom.dataset.index].dueDate =
+        document.querySelector("form input[type='date").value;
+      localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
+
+      dom.renderTodoItem();
+    }
+
     modalForm.reset();
   }
 
@@ -199,6 +225,8 @@ const modal = (() => {
     submitModal,
     //
     renderAddTodo,
+    //
+    renderEditTodo,
     renderRemoveTodo,
   };
 })();

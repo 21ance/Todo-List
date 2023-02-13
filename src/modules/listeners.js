@@ -3,7 +3,7 @@ import { modal } from "./modal";
 // might have to remov storage
 import { Storage } from "./storage";
 import { editProject, newProject, removeProject } from "./projects";
-import { newTodo, removeTodo } from "./todos";
+import { editTodo, newTodo, removeTodo } from "./todos";
 
 // modal form submit
 document.addEventListener("submit", (e) => {
@@ -88,7 +88,7 @@ document.addEventListener("click", (e) => {
 
   //rightside buttons
   if (target.title === "Edit Item") {
-    console.log("Edit Item");
+    editTodo(target);
   }
   if (target.title === "Remove Item") {
     removeTodo(target);
