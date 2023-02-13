@@ -15,8 +15,9 @@ function removeTodo(target) {
   modal.renderRemoveTodo(target);
 }
 
-function expandTodo() {
-  //
+function expandTodo(target) {
+  modal.revealModal("View Task", "Close", "btnClosePreview");
+  modal.renderExpandTodo(target);
 }
 
 export { newTodo, editTodo, removeTodo, expandTodo };

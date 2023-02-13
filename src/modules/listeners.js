@@ -3,7 +3,7 @@ import { modal } from "./modal";
 // might have to remov storage
 import { Storage } from "./storage";
 import { editProject, newProject, removeProject } from "./projects";
-import { editTodo, newTodo, removeTodo } from "./todos";
+import { editTodo, expandTodo, newTodo, removeTodo } from "./todos";
 
 // modal form submit
 document.addEventListener("submit", (e) => {
@@ -43,13 +43,11 @@ document.addEventListener("click", (e) => {
     dom.renderTodoItem();
 
     dom.main.id = target.textContent;
-    console.log(dom.main);
   }
 
   if (target.classList.contains("dynamic-button")) {
     dom.resetSideBarStatus();
     dom.activeSidebarStatus(target.parentElement);
-    //
     dom.main.id = target.textContent;
     dom.renderMain(target.parentElement.textContent);
     dom.appendNewTodoButton();
@@ -95,6 +93,6 @@ document.addEventListener("click", (e) => {
     document.querySelector("#btnRemoveTask").focus();
   }
   if (target.title === "Expand Item") {
-    console.log("Expand Item");
+    expandTodo(target);
   }
 });

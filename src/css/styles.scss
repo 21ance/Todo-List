@@ -7,6 +7,7 @@ $main-color: #fafafa;
 $dark-color: #1c1917;
 $white-font: #ffffff;
 $transition-time: 0.3s;
+$modal-width: 470px;
 
 * {
   margin: 0;
@@ -196,7 +197,7 @@ $transition-time: 0.3s;
         justify-content: space-between;
         align-items: center;
         border-bottom: solid $dark-color;
-        border-width: .1px;
+        border-width: 1px;
 
         input {
           accent-color: black;
@@ -273,7 +274,7 @@ $transition-time: 0.3s;
 
     .modal-content {
       background-color: $main-color;
-      width: 470px;
+      width: $modal-width;
 
     header {
       background-color: $header-color;
@@ -293,7 +294,7 @@ $transition-time: 0.3s;
       & > span {
         font-size: 1.2rem;
         padding: 30px 0;
-        max-width: 450px;
+        max-width: calc($modal-width - 20px);
         align-self: flex-start;
         overflow: hidden;
         white-space: nowrap;
@@ -316,11 +317,32 @@ $transition-time: 0.3s;
           border: 1px solid $dark-color;
         }
       }
+
+      .todo-expand {
+        display: grid;
+        grid-template-columns: 40% 60%;
+        gap: 20px;
+        width: 300px;
+        padding: 10px;
+        border-bottom: 1px solid $dark-color;
+
+        span:nth-child(1){
+          justify-self: end;
+        }
+
+        span:nth-child(2){
+          max-width: inherit;
+          max-height: 100px;
+          overflow: auto;
+          word-wrap: break-word
+        }
+      }
     }
 
     footer {
       background-color:$sidebar-color;
       display: flex;
+      flex-direction: row-reverse;
       align-items: center;
       justify-content: end;
       gap: 20px;

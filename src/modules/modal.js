@@ -30,13 +30,10 @@ const modal = (() => {
   }
 
   function resetModal() {
-    // remove all element of modalContent
-    // for (let i = 0; i < modalContent.childElementCount; i++) {
-    //   modalContent.removeChild(modalContent.lastChild);
-    // }
     while (modalContent.firstChild) {
       modalContent.removeChild(modalContent.lastChild);
     }
+    btnCancel.classList.remove("hide");
   }
 
   // sidebar - projects
@@ -103,7 +100,7 @@ const modal = (() => {
     formInput.setAttribute("type", inputType);
     formInput.value = value;
 
-    if (formInput.type === "date") {
+    if (formInput.type === "date" || formInput.type == "span") {
       formInput.placeholder = value;
     }
 
@@ -113,10 +110,24 @@ const modal = (() => {
     setFocus();
   }
 
+  function dynamicSpan(title, text) {
+    const spanContainer = document.createElement("div");
+    spanContainer.classList.add("todo-expand");
+
+    const spanLabel = document.createElement("span");
+    const spanDescription = document.createElement("span");
+
+    spanLabel.textContent = title;
+    spanDescription.textContent = text;
+
+    spanContainer.append(spanLabel, spanDescription);
+    modalContent.append(spanContainer);
+  }
+
   // main - todos
   let todoDom;
   function renderAddTodo() {
-    dynamicForm("Title", "input", "text", "", true, 20);
+    dynamicForm("Task Name", "input", "text", "", true, 20);
     dynamicForm("Description", "textarea", "", "");
     dynamicForm("Date", "input", "date");
   }
@@ -133,9 +144,24 @@ const modal = (() => {
     todoDom = target;
     const todoObject = Storage.allTodoList[target.dataset.index];
 
-    dynamicForm("Title", "input", "text", todoObject.title, true, 20);
+    dynamicForm("Task Name", "input", "text", todoObject.title, true, 20);
     dynamicForm("Description", "textarea", "", todoObject.description);
     dynamicForm("Date", "input", "date", todoObject.dueDate);
+  }
+
+  function renderExpandTodo(target) {
+    btnCancel.classList.add("hide");
+    todoDom = target;
+    const todoObject = Storage.allTodoList[target.dataset.index];
+    //
+    console.log(todoObject);
+    //
+    console.log(target);
+    dynamicSpan("Project:", todoObject.project);
+    dynamicSpan("Task:", todoObject.title);
+    dynamicSpan("Description:", todoObject.description);
+    dynamicSpan("Due Date:", todoObject.dueDate);
+    // dynamicForm("Title", "span", "span", "asdasasds", true, 20);
   }
 
   // dynamic submit
@@ -187,8 +213,6 @@ const modal = (() => {
         document.querySelector("form input[type='date']").value
       );
       localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
-      // console.log(dom.main.id);
-      // dom.renderTodoItem();
       dom.appendTodoItem();
     }
 
@@ -228,6 +252,7 @@ const modal = (() => {
     //
     renderEditTodo,
     renderRemoveTodo,
+    renderExpandTodo,
   };
 })();
 
