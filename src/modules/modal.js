@@ -140,7 +140,7 @@ const modal = (() => {
       Storage.projectList.splice(projectDOM.dataset.index, 1);
       localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
       dom.renderSideBarProjects();
-      // dom.initializeMain();
+      dom.initializeMain();
     }
 
     if (document.getElementById("btnEditProject")) {
@@ -151,7 +151,7 @@ const modal = (() => {
       // dom.resetSideBarStatus();
       // dom.activeSidebarStatus(projectDOM.parentElement.parentElement);
       dom.renderSideBarProjects();
-      // dom.initializeMain();
+      dom.initializeMain();
     }
 
     // todos

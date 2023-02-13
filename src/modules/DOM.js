@@ -2,13 +2,13 @@ import { modal } from "./modal";
 import { Storage } from "./storage";
 
 const dom = (() => {
-  const allProjects = document.querySelector(
+  const projectAll = document.querySelector(
     ".sidebar-static>button:first-child"
   );
+  const sidebarStatic = document.querySelectorAll(".sidebar-static button");
   const sidebarDynamic = document.querySelector(".sidebar-dynamic");
 
   function renderSideBarProjects() {
-    allProjects.classList.add("active");
     resetSideBarProjects();
     for (let i = 0; i < Storage.projectList.length; i++) {
       sidebarDynamic.append(renderProjectUI(Storage.projectList[i], i));
@@ -19,6 +19,10 @@ const dom = (() => {
     while (sidebarDynamic.firstChild) {
       sidebarDynamic.removeChild(sidebarDynamic.lastChild);
     }
+    sidebarStatic.forEach((staticProject) => {
+      staticProject.classList.remove("active");
+    });
+    projectAll.classList.add("active");
   }
 
   function appendSideBarProjects() {
@@ -86,7 +90,7 @@ const dom = (() => {
   // todo header
   function renderMain(header) {
     resetHeader();
-
+    main.id = header;
     todoContainer.classList.add("todos");
 
     const h1 = document.createElement("h1");
@@ -207,7 +211,7 @@ const dom = (() => {
   }
 
   function initializeMain() {
-    renderMain(main.id);
+    renderMain("All");
     renderTodoItem();
   }
 
@@ -219,6 +223,8 @@ const dom = (() => {
     activeSidebarStatus,
     //
     renderMain,
+    renderTodoItem,
+    //
     initializeMain,
     renderTodoUI,
     appendNewTodoButton,

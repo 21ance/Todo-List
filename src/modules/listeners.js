@@ -39,9 +39,11 @@ document.addEventListener("click", (e) => {
   if (target.classList.contains("static-button")) {
     dom.resetSideBarStatus();
     dom.activeSidebarStatus(target);
-    dom.main.id = target.textContent;
     dom.renderMain(target.textContent);
     dom.renderTodoItem();
+
+    dom.main.id = target.textContent;
+    console.log(dom.main);
   }
 
   if (target.classList.contains("dynamic-button")) {
