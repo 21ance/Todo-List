@@ -125,8 +125,14 @@ const dom = (() => {
   function renderTodoItem() {
     resetMain();
 
+    const sortbyDate = Storage.allTodoList.sort((a, b) => {
+      return (
+        b.dueDate.replace(/[,()-]/g, "") - a.dueDate.replace(/[,()-]/g, "")
+      );
+    });
+
     // this loop is for static projects (All -> Past Due)
-    for (let i = 0; i < Storage.allTodoList.length; i++) {
+    for (let i = 0; i < sortbyDate.length; i++) {
       const currentDate = new Date().toJSON().slice(0, 10);
       const task = Storage.allTodoList[i];
       if (Storage.allTodoList[i].project === main.id || main.id === "All") {

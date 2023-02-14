@@ -183,7 +183,12 @@ const modal = (() => {
         document.querySelector("form input[type='date']").value
       );
       localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
-      dom.appendTodoItem();
+
+      // MIGHT HAVE TO REVISIT
+      // check if want to append to last item
+      // or instantly refresh and sort
+      // dom.appendTodoItem();
+      dom.renderTodoItem();
     }
 
     if (document.getElementById("btnRemoveTask")) {
