@@ -256,6 +256,14 @@ const dom = (() => {
     renderTodoItem();
   }
 
+  function responsiveMobile() {
+    const container = document.querySelector(".container");
+    const aside = document.querySelector("aside");
+
+    container.classList.toggle("two-column");
+    aside.classList.toggle("show-aside");
+  }
+
   return {
     main,
     renderSideBarProjects,
@@ -269,6 +277,7 @@ const dom = (() => {
     appendNewTodoButton,
     appendTodoItem,
     renderTodoItem,
+    responsiveMobile,
   };
 })();
 

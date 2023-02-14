@@ -95,4 +95,9 @@ document.addEventListener("click", (e) => {
   if (target.title === "Expand Item") {
     expandTodo(target);
   }
+
+  // mobile burgermenu
+  if (target === sidbarToggle) {
+    dom.responsiveMobile();
+  }
 });
