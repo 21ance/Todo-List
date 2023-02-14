@@ -1,5 +1,6 @@
 import { dom } from "./DOM";
 import { modal } from "./modal";
+import { Storage } from "./storage";
 import { editProject, newProject, removeProject } from "./projects";
 import { editTodo, expandTodo, newTodo, removeTodo } from "./todos";
 
@@ -9,8 +10,6 @@ document.addEventListener("submit", (e) => {
 
   modal.toggleModal();
   modal.submitModal();
-  // dom.appendSideBarProjects();
-  // dom.renderSideBarProjects();
 });
 
 // close modal on keyboard escape
@@ -24,10 +23,9 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// general clicky
+// general clicky listener
 document.addEventListener("click", (e) => {
   const target = e.target;
-  // console.log(e.target);
 
   if (target === btnCancel || target === modalID) {
     modal.toggleModal();
@@ -39,7 +37,6 @@ document.addEventListener("click", (e) => {
     dom.activeSidebarStatus(target);
     dom.renderMain(target.textContent);
     dom.renderTodoItem();
-
     dom.main.id = target.textContent;
   }
 
@@ -70,17 +67,26 @@ document.addEventListener("click", (e) => {
     newTodo();
   }
 
-  // actual todos
   // checkbox
-  if (target.type === "checkbox") {
-    target.nextSibling.classList.toggle("checked");
-    // target.classList.toggle("asdsa");
-  }
-  // console.log(target);
+  const taskContainer = document.querySelector(
+    `.todos>div>div[data-index="${target.dataset.index}"]`
+  );
+  const checkbox = document.querySelector(
+    `.todos input[data-index="${target.dataset.index}"]`
+  );
 
-  // if (target.className === "todo-item-left") {
-  //   target.classList.toggle("checked");
-  // }
+  if (target.type === "checkbox" || target.classList.contains("checkbox")) {
+    taskContainer.classList.toggle("checked");
+    Storage.allTodoList[target.dataset.index].checked = !checkbox.checked;
+    localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
+    return checkbox.checked
+      ? (checkbox.checked = false)
+      : (checkbox.checked = true);
+  }
+
+  if (target.dataset.index) {
+    // console.log("span");
+  }
 
   //rightside buttons
   if (target.title === "Edit Item") {

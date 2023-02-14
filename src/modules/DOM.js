@@ -161,7 +161,7 @@ const dom = (() => {
           )
         );
       }
-      if (task.checked === "true" && main.id === "Completed") {
+      if (task.checked === true && main.id === "Completed") {
         todoContainer.append(
           renderTodoUI(
             Storage.allTodoList[i].checked,
@@ -192,16 +192,22 @@ const dom = (() => {
     // left
     const todoItemLeft = document.createElement("div");
     todoItemLeft.classList.add("todo-item-left");
+    todoItemLeft.classList.add("checkbox");
+    todoItemLeft.setAttribute("data-index", identifier);
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = status;
     checkbox.setAttribute("data-index", identifier);
     const todoDetails = document.createElement("span");
+    todoDetails.classList.add("checkbox");
+    todoDetails.setAttribute("data-index", identifier);
     todoDetails.textContent = title;
+
     todoItemLeft.append(checkbox, todoDetails);
 
     if (checkbox.checked) {
-      checkbox.nextSibling.classList.add("checked");
+      checkbox.parentElement.classList.toggle("checked");
+      // console.log(checkbox.parentElement.parentElement);
     }
 
     // right
