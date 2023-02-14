@@ -223,6 +223,10 @@ body, button {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+
+          input {
+            pointer-events: none
+          }
         }
 
         .todo-item-right {
