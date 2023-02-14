@@ -96,7 +96,6 @@ const dom = (() => {
     h1.textContent = header;
 
     todoHeader.append(h1);
-    // todoContainer.append(todoHeader);
     main.append(todoHeader, todoContainer);
   }
 
@@ -207,7 +206,6 @@ const dom = (() => {
     if (checkbox.checked) {
       checkbox.parentElement.classList.toggle("checked");
     }
-
     // right
     const todoItemRight = document.createElement("div");
     todoItemRight.classList.add("todo-item-right");

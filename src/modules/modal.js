@@ -2,7 +2,6 @@ import { Storage } from "./storage";
 import { dom } from "./DOM";
 
 const modal = (() => {
-  // modal functions
   const modal = document.querySelector(".modal");
   const modalForm = document.querySelector("form");
   const modalHeader = document.querySelector(".modal-content header");

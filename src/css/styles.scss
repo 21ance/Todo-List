@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Itim&family=Open+Sans&family=Raleway&family=Roboto&family=Sedgwick+Ave&family=Shadows+Into+Light&display=swap');
 
-$header-color: #292524;
-$footer-color: #292524;
-$sidebar-color: #f5f5f4;
-$main-color: #fafafa;
-$dark-color: #1c1917;
-$white-font: #ffffff;
+$main-accent: #881337;
+$sidebar-color: #ffe4e6;
+$container-main-color: #fff1f2;
+$default-font-color: #9f1239;
+$white-font: #fff1f2;
 $transition-time: 0.3s;
 $modal-width: 470px;
 
@@ -18,13 +17,17 @@ $modal-width: 470px;
   font-family: 'Open Sans', sans-serif;
 }
 
+body, button {
+  color: $default-font-color;
+}
+
 .container {
   display: grid;
   grid-template-columns: 300px 1fr;
   grid-template-rows: 80px calc(100vh - 110px) 30px;
 
   header {
-    background-color: $header-color;
+    background-color: $main-accent;
     grid-row: 1 / 2;
     grid-column: 1 / 3;
 
@@ -32,8 +35,8 @@ $modal-width: 470px;
     align-items: center;
 
     button {
-      color: $main-color;
-      background-color: $header-color;
+      color: $container-main-color;
+      background-color: $main-accent;
 
       display: none;
 
@@ -103,7 +106,7 @@ $modal-width: 470px;
       margin-top: 30px;
       
       button, .extend {
-        background-color: $main-color;
+        background-color: $container-main-color;
         border-radius: 4px;
         width: 250px;
         padding: 10px;
@@ -116,12 +119,12 @@ $modal-width: 470px;
 
       button:hover{
         transition: $transition-time;
-        border: 1px solid $dark-color;
+        border: 1px solid $main-accent;
       }
     }
 
     .dynamic-item-container{
-      background-color: $main-color;
+      background-color: $container-main-color;
       border-radius: 4px;
       width: 250px;
       font-size: 1.2rem;
@@ -135,6 +138,9 @@ $modal-width: 470px;
       
       button {
       flex: 1;
+      display: flex;
+      gap: 5px;
+      align-items: center;
       text-align: start;
       color: inherit;
       background-color: transparent;
@@ -157,12 +163,12 @@ $modal-width: 470px;
     
     .dynamic-item-container:hover{
       transition: $transition-time;
-      border: 1px solid $dark-color;
+      border: 1px solid $main-accent;
     }
   }
 
   main {
-    background-color: $main-color;
+    background-color: $container-main-color;
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     overflow: auto;
@@ -171,7 +177,7 @@ $modal-width: 470px;
     .todo-header {
       display: flex;
       justify-content: space-between;
-      border-bottom: 3px solid $dark-color;
+      border-bottom: 3px solid $main-accent;
       min-width: 200px;
       margin-top: 20px;
 
@@ -200,16 +206,16 @@ $modal-width: 470px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: solid $dark-color;
+        border-bottom: solid $main-accent;
         border-width: 1px;
         min-width: 300px;
 
         input {
-          accent-color: black;
+          accent-color: $main-accent;
         }
         
         .todo-item-left {
-          padding: 10px 5px;
+          padding: 12px 5px;
           display: flex;
           gap: 5px;
           cursor: pointer;
@@ -251,7 +257,7 @@ $modal-width: 470px;
   }
 
   footer {
-    background-color: $footer-color;
+    background-color: $main-accent;
     color: $white-font;
     grid-row: 3 / 4;
     grid-column: 1 / 3;
@@ -263,6 +269,11 @@ $modal-width: 470px;
       align-items: center;
       color: $white-font;
       text-decoration: none;
+    }
+
+    a:hover{
+      transition: $transition-time;
+      opacity: 0.5;
     }
   }
 }
@@ -281,11 +292,11 @@ $modal-width: 470px;
   align-items: center;
 
     .modal-content {
-      background-color: $main-color;
+      background-color: $container-main-color;
       width: $modal-width;
 
     header {
-      background-color: $header-color;
+      background-color: $main-accent;
       color: $white-font;
       padding: 20px;
       font-size: 1.5rem;
@@ -322,7 +333,7 @@ $modal-width: 470px;
           padding: 5px 15px;
           width: 400px;
           border-radius: 4px;
-          border: 1px solid $dark-color;
+          border: 1px solid $main-accent;
         }
       }
 
@@ -332,7 +343,7 @@ $modal-width: 470px;
         gap: 20px;
         width: 300px;
         padding: 10px;
-        border-bottom: 1px solid $dark-color;
+        border-bottom: 1px solid $main-accent;
 
         span:nth-child(1){
           justify-self: end;
@@ -367,8 +378,8 @@ $modal-width: 470px;
       }
 
       #btnCancel {
-        background-color: $main-color;
-        border: 1px solid $dark-color;
+        background-color: $container-main-color;
+        border: 1px solid $main-accent;
       }
     }
   }
@@ -399,10 +410,18 @@ button {
   grid-template-columns: 300px 1fr !important;
 }
 
+input, textarea {
+  color: $default-font-color;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 10px $default-font-color;
+}
 .active {
-  background-color: $header-color !important;
+  background-color: $main-accent !important;
   color: $white-font !important;
-  border: 1px solid $header-color !important;
+  border: 1px solid $main-accent !important;
   border-radius: inherit;
 }
 
