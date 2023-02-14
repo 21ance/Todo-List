@@ -1,7 +1,6 @@
 import { modal } from "./modal";
 
 function newProject() {
-  modal.modalForm.reset();
   modal.revealModal("New Project", "Add", "btnCreateProject");
   modal.renderNewProject();
 }

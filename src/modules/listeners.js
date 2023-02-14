@@ -1,7 +1,5 @@
 import { dom } from "./DOM";
 import { modal } from "./modal";
-// might have to remov storage
-import { Storage } from "./storage";
 import { editProject, newProject, removeProject } from "./projects";
 import { editTodo, expandTodo, newTodo, removeTodo } from "./todos";
 

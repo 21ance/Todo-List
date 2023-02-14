@@ -127,7 +127,10 @@ const dom = (() => {
   function renderTodoItem() {
     resetMain();
 
+    // this loop is for static projects (All -> Past Due)
     for (let i = 0; i < Storage.allTodoList.length; i++) {
+      const currentDate = new Date().toJSON().slice(0, 10);
+      const task = Storage.allTodoList[i];
       if (Storage.allTodoList[i].project === main.id || main.id === "All") {
         todoContainer.append(
           renderTodoUI(
@@ -138,7 +141,46 @@ const dom = (() => {
           )
         );
       }
-      // TO ADD: TODAY AND UPCOMING
+      if (task.dueDate === currentDate && main.id === "Today") {
+        todoContainer.append(
+          renderTodoUI(
+            Storage.allTodoList[i].checked,
+            Storage.allTodoList[i].title,
+            Storage.allTodoList[i].dueDate,
+            i
+          )
+        );
+      }
+      if (task.dueDate > currentDate && main.id === "Upcoming") {
+        todoContainer.append(
+          renderTodoUI(
+            Storage.allTodoList[i].checked,
+            Storage.allTodoList[i].title,
+            Storage.allTodoList[i].dueDate,
+            i
+          )
+        );
+      }
+      if (task.checked === "true" && main.id === "Completed") {
+        todoContainer.append(
+          renderTodoUI(
+            Storage.allTodoList[i].checked,
+            Storage.allTodoList[i].title,
+            Storage.allTodoList[i].dueDate,
+            i
+          )
+        );
+      }
+      if (task.dueDate < currentDate && main.id === "Past Due") {
+        todoContainer.append(
+          renderTodoUI(
+            Storage.allTodoList[i].checked,
+            Storage.allTodoList[i].title,
+            Storage.allTodoList[i].dueDate,
+            i
+          )
+        );
+      }
     }
   }
 

@@ -10,12 +10,6 @@ const modal = (() => {
   const btnCancel = document.querySelector("#btnCancel");
   const btnDynamic = document.querySelector("#btnDynamic");
 
-  //
-  const modalLabel = document.createElement("label");
-  const modalTitle = document.createElement("span");
-  const modalInput = document.createElement("input");
-
-  //
   function revealModal(modalTitle, btnName, btnId) {
     resetModal();
     toggleModal();
@@ -59,7 +53,7 @@ const modal = (() => {
   function renderEditProject(target) {
     projectDOM = target;
     const todoObject = Storage.projectList[target.dataset.index];
-    dynamicForm("Task Name", "input", "text", todoObject, true, 20);
+    dynamicForm("Project Name", "input", "text", todoObject, true, 20);
   }
 
   // set keyboard focus on first form input
