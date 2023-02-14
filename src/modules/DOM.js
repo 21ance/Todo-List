@@ -1,4 +1,3 @@
-import { modal } from "./modal";
 import { Storage } from "./storage";
 
 const dom = (() => {
@@ -207,7 +206,6 @@ const dom = (() => {
 
     if (checkbox.checked) {
       checkbox.parentElement.classList.toggle("checked");
-      // console.log(checkbox.parentElement.parentElement);
     }
 
     // right
@@ -236,13 +234,8 @@ const dom = (() => {
     btnExpand.append(btnExpandIcon);
 
     todoItemRight.append(todoDate, btnEdit, btnRemove, btnExpand);
-
-    //
     todoItem.append(todoItemLeft, todoItemRight);
-    // todoContainer.append(todoItem);
-    // const newItem = renderTodoUI(
-    //   // Storage.allTodoList[Storage.projectList.length - 1],
-    // )
+
     return todoItem;
   }
 
@@ -269,10 +262,8 @@ const dom = (() => {
     appendSideBarProjects,
     resetSideBarStatus,
     activeSidebarStatus,
-    //
     renderMain,
     renderTodoItem,
-    //
     initializeMain,
     renderTodoUI,
     appendNewTodoButton,

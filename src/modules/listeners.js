@@ -84,10 +84,6 @@ document.addEventListener("click", (e) => {
       : (checkbox.checked = true);
   }
 
-  if (target.dataset.index) {
-    // console.log("span");
-  }
-
   //rightside buttons
   if (target.title === "Edit Item") {
     editTodo(target);

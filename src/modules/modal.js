@@ -32,13 +32,10 @@ const modal = (() => {
 
   // sidebar - projects
   let projectDOM;
-
-  // new project
   function renderNewProject() {
     dynamicForm("Project Name", "input", "text", "", true, 20);
   }
 
-  // remove project
   function renderRemoveProject(element) {
     projectDOM = element;
     const elementIndex = Storage.projectList[element.dataset.index];
@@ -49,7 +46,6 @@ const modal = (() => {
     modalContent.append(projectName);
   }
 
-  // edit project
   function renderEditProject(target) {
     projectDOM = target;
     const todoObject = Storage.projectList[target.dataset.index];
@@ -64,7 +60,6 @@ const modal = (() => {
     focusElement.focus();
   }
 
-  //
   function dynamicForm(title, input, inputType, value, isRequired, maxlength) {
     const formLabel = document.createElement("label");
     const fromTitle = document.createElement("span");
@@ -145,7 +140,6 @@ const modal = (() => {
     }
 
     if (document.getElementById("btnRemoveProject")) {
-      // also remove the project and their tasks from all storage
       for (let i = Storage.allTodoList.length - 1; i >= 0; i--) {
         if (
           Storage.projectList[projectDOM.dataset.index] ===
@@ -155,7 +149,6 @@ const modal = (() => {
           localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
         }
       }
-      // remove from projects storage
       Storage.projectList.splice(projectDOM.dataset.index, 1);
       localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
       dom.renderSideBarProjects();
@@ -163,13 +156,20 @@ const modal = (() => {
     }
 
     if (document.getElementById("btnEditProject")) {
+      for (let i = 0; i < Storage.allTodoList.length; i++) {
+        if (
+          Storage.projectList[projectDOM.dataset.index] ===
+          Storage.allTodoList[i].project
+        ) {
+          Storage.allTodoList[i].project =
+            document.querySelector("#modalForm input").value;
+        }
+        localStorage.setItem("All", JSON.stringify(Storage.allTodoList));
+      }
       Storage.projectList[projectDOM.dataset.index] =
         document.querySelector("form input").value;
       localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
-      // dom.renderSideBarProjects();
-      // console.log(projectDOM.parentElement);
-      // dom.resetSideBarStatus();
-      // dom.activeSidebarStatus(projectDOM.parentElement.parentElement);
+
       dom.renderSideBarProjects();
       dom.initializeMain();
     }
