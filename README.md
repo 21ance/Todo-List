@@ -4,7 +4,7 @@ This is a dynamic Todo App, written using vanilla JavaScript. The project implem
 
 ---
 
-**Build with:**
+**Built with:**
 
 - HTML
 - CSS / SASS
