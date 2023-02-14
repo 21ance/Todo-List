@@ -41,15 +41,7 @@ const modal = (() => {
 
   // new project
   function renderNewProject() {
-    modalTitle.textContent = "Title*";
-    modalInput.placeholder = "Enter Title";
-    modalInput.required = true;
-    modalInput.setAttribute("maxlength", "20");
-
-    modalLabel.append(modalTitle, modalInput);
-    modalContent.append(modalLabel);
-
-    setFocus();
+    dynamicForm("Project Name", "input", "text", "", true, 20);
   }
 
   // remove project
@@ -64,19 +56,10 @@ const modal = (() => {
   }
 
   // edit project
-  function renderEditProject(element) {
-    projectDOM = element;
-    const elementIndex = Storage.projectList[element.dataset.index];
-    //
-    modalTitle.textContent = "Title*";
-    modalInput.value = elementIndex;
-    modalInput.required = true;
-    modalInput.setAttribute("maxlength", "20");
-
-    modalLabel.append(modalTitle, modalInput);
-    modalContent.append(modalLabel);
-
-    setFocus();
+  function renderEditProject(target) {
+    projectDOM = target;
+    const todoObject = Storage.projectList[target.dataset.index];
+    dynamicForm("Task Name", "input", "text", todoObject, true, 20);
   }
 
   // set keyboard focus on first form input
@@ -153,24 +136,17 @@ const modal = (() => {
     btnCancel.classList.add("hide");
     todoDom = target;
     const todoObject = Storage.allTodoList[target.dataset.index];
-    //
-    console.log(todoObject);
-    //
-    console.log(target);
     dynamicSpan("Project:", todoObject.project);
     dynamicSpan("Task:", todoObject.title);
     dynamicSpan("Description:", todoObject.description);
     dynamicSpan("Due Date:", todoObject.dueDate);
-    // dynamicForm("Title", "span", "span", "asdasasds", true, 20);
   }
 
   // dynamic submit
   function submitModal() {
     // projects
     if (document.getElementById("btnCreateProject")) {
-      Storage.newProjectObject(
-        document.querySelector("input[placeholder='Enter Title']").value
-      );
+      Storage.newProjectObject(document.querySelector("form input").value);
       dom.appendSideBarProjects();
     }
 
@@ -193,9 +169,10 @@ const modal = (() => {
     }
 
     if (document.getElementById("btnEditProject")) {
-      Storage.projectList[projectDOM.dataset.index] = modalInput.value;
+      Storage.projectList[projectDOM.dataset.index] =
+        document.querySelector("form input").value;
       localStorage.setItem("Projects", JSON.stringify(Storage.projectList));
-      dom.renderSideBarProjects();
+      // dom.renderSideBarProjects();
       // console.log(projectDOM.parentElement);
       // dom.resetSideBarStatus();
       // dom.activeSidebarStatus(projectDOM.parentElement.parentElement);
@@ -247,9 +224,7 @@ const modal = (() => {
     renderEditProject,
     toggleModal,
     submitModal,
-    //
     renderAddTodo,
-    //
     renderEditTodo,
     renderRemoveTodo,
     renderExpandTodo,
