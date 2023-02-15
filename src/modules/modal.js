@@ -114,7 +114,6 @@ const modal = (() => {
   function renderEditTodo(target) {
     todoDom = target;
     const todoObject = Storage.allTodoList[target.dataset.index];
-
     dynamicForm("Task Name", "input", "text", todoObject.title, true, 20);
     dynamicForm("Description", "textarea", "", todoObject.description);
     dynamicForm("Date", "input", "date", todoObject.dueDate);

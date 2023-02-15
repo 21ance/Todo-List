@@ -37,7 +37,6 @@ document.addEventListener("click", (e) => {
     dom.activeSidebarStatus(target);
     dom.renderMain(target.textContent);
     dom.renderTodoItem();
-    dom.main.id = target.textContent;
   }
 
   if (target.classList.contains("dynamic-button")) {
@@ -45,7 +44,6 @@ document.addEventListener("click", (e) => {
     dom.activeSidebarStatus(target.parentElement);
     dom.renderMain(target.parentElement.textContent);
     dom.renderTodoItem();
-    dom.main.id = target.textContent;
   }
 
   if (target === btnNewProject) {

@@ -133,10 +133,10 @@ const dom = (() => {
       );
     });
 
-    // this loop is for static projects (All -> Past Due)
     for (let i = 0; i < sortbyDate.length; i++) {
       const currentDate = new Date().toJSON().slice(0, 10);
       const task = Storage.allTodoList[i];
+      // this if is for dynamically created projects, and all projects
       if (Storage.allTodoList[i].project === main.id || main.id === "All") {
         todoContainer.append(
           renderTodoUI(
@@ -147,6 +147,7 @@ const dom = (() => {
           )
         );
       }
+      // rest for static projects (Today -> Past Due)
       if (task.dueDate === currentDate && main.id === "Today") {
         todoContainer.append(
           renderTodoUI(
@@ -246,7 +247,6 @@ const dom = (() => {
   }
 
   function appendNewTodoButton() {
-    console.log(main.id);
     const noTodoButton = ["Today", "Upcoming", "Completed", "Past Due"];
     for (let i = 0; i < noTodoButton.length; i++) {
       if (main.id === noTodoButton[i]) {
