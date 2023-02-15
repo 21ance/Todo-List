@@ -43,10 +43,9 @@ document.addEventListener("click", (e) => {
   if (target.classList.contains("dynamic-button")) {
     dom.resetSideBarStatus();
     dom.activeSidebarStatus(target.parentElement);
-    dom.main.id = target.textContent;
     dom.renderMain(target.parentElement.textContent);
-    dom.appendNewTodoButton();
     dom.renderTodoItem();
+    dom.main.id = target.textContent;
   }
 
   if (target === btnNewProject) {
@@ -84,7 +83,7 @@ document.addEventListener("click", (e) => {
       : (checkbox.checked = true);
   }
 
-  //rightside buttons
+  // rightside buttons
   if (target.title === "Edit Item") {
     editTodo(target);
   }

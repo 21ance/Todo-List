@@ -97,6 +97,8 @@ const dom = (() => {
 
     todoHeader.append(h1);
     main.append(todoHeader, todoContainer);
+
+    appendNewTodoButton();
   }
 
   function resetHeader() {
@@ -244,6 +246,13 @@ const dom = (() => {
   }
 
   function appendNewTodoButton() {
+    console.log(main.id);
+    const noTodoButton = ["Today", "Upcoming", "Completed", "Past Due"];
+    for (let i = 0; i < noTodoButton.length; i++) {
+      if (main.id === noTodoButton[i]) {
+        return;
+      }
+    }
     const btnAddTodo = document.createElement("button");
     btnAddTodo.id = "btnAddTodo";
     btnAddTodo.title = "Add Todo";
